@@ -70,3 +70,25 @@ body {
     @apply bg-background text-foreground;
   }
 }
+/* Add to your global CSS file */
+.scrollbar-custom {
+  @apply overflow-y-auto; /* Apply utility classes */
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #6b7280;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button {
+  display: none;
+}
