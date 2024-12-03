@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { formatDate } from "date-fns";
 import { Badge } from "./ui/badge";
+import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 
 interface ResumePreviewProps {
   resumeData: ResumeValues;
@@ -69,6 +70,9 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           height={100}
           alt="Author photo"
           className="aspect-square object-cover"
+          style={{
+            borderRadius: borderStyle === BorderStyles.SQUARE ? "0px" : borderStyle === BorderStyles.CIRCLE ?"9999px": "10%"
+          }}
         />
       )}
       <div className="space-y-2.5">
@@ -201,7 +205,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 }
 
 function SkillsSection ({resumeData}:ResumeSectionProps){
-    const {skills,colorHex} = resumeData;
+    const {skills,colorHex,borderStyle} = resumeData;
 
     if(!skills?.length) return null;
 
@@ -211,9 +215,12 @@ function SkillsSection ({resumeData}:ResumeSectionProps){
         <p className="flex break-inside-avoid flex-wrap gap-2">Skills</p>
         <div className="flex break-inside-avoid flex-wrap gap-2">
             {skills.map((skill,index)=>(
-                <Badge key = {index} className="bg-black hover:bg-black text-white rounded-md" styles = {{
-                    backgroundColor: colorHex
-                }}>
+                <Badge key = {index} className="bg-black hover:bg-black text-white rounded-md" 
+                style={{
+                  backgroundColor: colorHex,
+                  borderRadius: borderStyle === BorderStyles.SQUARE ? "0px" : borderStyle === BorderStyles.CIRCLE ?"9999px": "10%"
+                }}
+                >
                     {skill}
                 </Badge>
             ))}

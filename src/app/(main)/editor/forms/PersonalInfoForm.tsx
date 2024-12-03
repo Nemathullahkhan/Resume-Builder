@@ -10,8 +10,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { EditoFormProps } from "@/lib/types";
+import { Button } from "@/components/ui/button";
 
 export default function PersonalInfoForm({
   resumeData,
@@ -34,11 +35,12 @@ export default function PersonalInfoForm({
     const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
-      setResumeData({...resumeData,...values})
-
+      setResumeData({ ...resumeData, ...values });
     });
     return unsubscribe;
-  }, [form,resumeData,setResumeData]);
+  }, [form, resumeData, setResumeData]);
+
+  const photoInpuRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -54,17 +56,32 @@ export default function PersonalInfoForm({
             render={({ field: { value, ...fieldValues } }) => (
               <FormItem>
                 <FormLabel>Your photo</FormLabel>
-                <FormControl>
-                  <Input
-                    {...fieldValues}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      fieldValues.onChange(file);
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <FormControl>
+                      <Input
+                        {...fieldValues}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          fieldValues.onChange(file);
+                        }}
+                        ref={photoInpuRef}
+                      />
+                    </FormControl>
+                    <Button
+                    variant = "secondary"
+                    type ="button"
+                    onClick = {()=>{
+                      fieldValues.onChange(null)
+                      if(photoInpuRef.current){
+                        photoInpuRef.current.value ="";
+                      }
                     }}
-                  />
-                </FormControl>
+                    >Remove</Button>
+                  </div>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
