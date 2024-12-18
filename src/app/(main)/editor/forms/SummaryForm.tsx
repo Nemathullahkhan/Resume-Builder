@@ -1,10 +1,11 @@
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { EditorFormProps } from "@/lib/types"
 import { summarySchema, SummaryValues } from "@/lib/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import GenerateSummaryButton from "./GenerateSummaryButton"
 
 
 export default function SummaryForm ({resumeData,setResumeData}:EditorFormProps) {
@@ -45,6 +46,10 @@ export default function SummaryForm ({resumeData,setResumeData}:EditorFormProps)
                             {...field}
                             placeholder="A brief,engaging text about yourself!"/>
                         </FormControl>
+                        <FormMessage/>
+                        <GenerateSummaryButton
+                         resumeData = {resumeData}
+                         onSummaryGenerated={summary=> form.setValue("summary",summary)}/>
                     </FormItem>
                 )}
                 />
