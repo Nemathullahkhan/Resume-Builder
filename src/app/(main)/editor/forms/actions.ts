@@ -115,27 +115,14 @@ export async function generateWorkExperience(
 
   console.log("aiResponse: ", aiResponse);
 
-  // return {
-  //   position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
-  //   company: aiResponse.match(/Company: (.*)/)?.[1] || "",
-  //   description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
-  //   startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
-  //   endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
-  // } satisfies WorkExperience;
+  return {
+    position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
+    company: aiResponse.match(/Company: (.*)/)?.[1] || "",
+    description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
+    startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
+    endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
+  } satisfies WorkExperience;
 
-  const startDateMatch = aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/);
-const endDateMatch = aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/);
 
-return {
-  id: "", // Replace with actual ID or provide default
-  resumeId: "", // Replace with the associated resume ID
-  position: aiResponse.match(/Job title: (.*)/)?.[1] || null,
-  company: aiResponse.match(/Company: (.*)/)?.[1] || null,
-  description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim() || null,
-  startDate: startDateMatch ? new Date(startDateMatch[1]) : null,
-  endDate: endDateMatch ? new Date(endDateMatch[1]) : null,
-  createdAt: new Date(), // Replace with actual `createdAt` value if available
-  updatedAt: new Date(), // Replace with actual `updatedAt` value if available
-} satisfies WorkExperience;
 
 }
