@@ -38,6 +38,7 @@ model Resume {
   workExperiences WorkExperience[]
   educations      Education[]
   skills          String[]
+  projects        Projects[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -61,6 +62,22 @@ model WorkExperience {
   updatedAt DateTime @updatedAt
 
   @@map("work_experiences")
+}
+
+model Projects {
+  id              String    @id @default(cuid())
+  projectName        String?
+  link         String?
+  techStack String?
+  description     String?
+
+  resumeId String
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("projects")
 }
 
 model Education {
