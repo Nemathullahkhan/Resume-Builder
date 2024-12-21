@@ -30,6 +30,8 @@ export const personalInfoSchema = z.object({
   country: optionalString,
   phone: optionalString,
   email: optionalString,
+  githubProfile: optionalString,
+  linkedinProfile: optionalString,
 });
 
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
@@ -40,6 +42,7 @@ export const workExperienceSchema = z.object({
       z.object({
         position: optionalString,
         company: optionalString,
+        companyLocation: optionalString,
         startDate: optionalString,
         endDate: optionalString,
         description: optionalString,
@@ -60,6 +63,7 @@ export const educationSchema = z.object({
         school: optionalString,
         startDate: optionalString,
         endDate: optionalString,
+        cgpa: optionalString,
       }),
     )
     .optional(),

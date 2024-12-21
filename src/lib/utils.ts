@@ -30,9 +30,13 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     country: data.country || undefined,
     phone: data.phone || undefined,
     email: data.email || undefined,
+    githubProfile: data.githubProfile || undefined,
+    linkedinProfile: data.linkedinProfile || undefined,
+    
     workExperiences: data.workExperiences.map((exp) => ({
       position: exp.position || undefined,
       company: exp.company || undefined,
+      companyLocation: exp.companyLocation || undefined,
       startDate: exp.startDate?.toISOString().split("T")[0],
       endDate: exp.endDate?.toISOString().split("T")[0],
       description: exp.description || undefined,
@@ -40,6 +44,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     educations: data.educations.map((edu) => ({
       degree: edu.degree || undefined,
       school: edu.school || undefined,
+      cgpa: edu.cgpa || undefined,
       startDate: edu.startDate?.toISOString().split("T")[0],
       endDate: edu.endDate?.toISOString().split("T")[0],
     })),

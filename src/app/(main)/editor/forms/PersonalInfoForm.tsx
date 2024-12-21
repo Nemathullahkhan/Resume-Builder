@@ -28,6 +28,8 @@ export default function PersonalInfoForm({
       country: resumeData.country || "",
       phone: resumeData.phone || "",
       email: resumeData.email || "",
+      githubProfile: resumeData.githubProfile || "",
+      linkedinProfile: resumeData.linkedinProfile || "",
     },
   });
 
@@ -35,7 +37,12 @@ export default function PersonalInfoForm({
     const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
-      setResumeData({ ...resumeData, ...values });
+      setResumeData({
+        ...resumeData,
+        githubProfile: values.githubProfile || "",
+        linkedinProfile: values.linkedinProfile || "",
+        ...values,
+      });
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
@@ -71,15 +78,17 @@ export default function PersonalInfoForm({
                       />
                     </FormControl>
                     <Button
-                    variant = "secondary"
-                    type ="button"
-                    onClick = {()=>{
-                      fieldValues.onChange(null)
-                      if(photoInpuRef.current){
-                        photoInpuRef.current.value ="";
-                      }
-                    }}
-                    >Remove</Button>
+                      variant="secondary"
+                      type="button"
+                      onClick={() => {
+                        fieldValues.onChange(null);
+                        if (photoInpuRef.current) {
+                          photoInpuRef.current.value = "";
+                        }
+                      }}
+                    >
+                      Remove
+                    </Button>
                   </div>
                 </div>
                 <FormMessage />
@@ -168,6 +177,30 @@ export default function PersonalInfoForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} type="email" />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="githubProfile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Github Profile</FormLabel>
+                <FormControl>
+                  <Input {...field} type="email" />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="linkedinProfile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>LinkedIn Profile</FormLabel>
                 <FormControl>
                   <Input {...field} type="email" />
                 </FormControl>

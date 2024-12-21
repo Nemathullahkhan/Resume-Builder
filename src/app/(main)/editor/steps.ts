@@ -15,8 +15,8 @@ export const steps: {
 }[] = [
     {title:"General Info", component: GeneralInfoForm , key:"general-info"},
     {title:"Personal Info", component: PersonalInfoForm , key:"personal-info"},
-    {title:"Work experience", component: WorkExperienceForm , key:"work-experience"},
     {title:"Education", component: EducationForm , key:"education"},
+    {title:"Work experience", component: WorkExperienceForm , key:"work-experience"},
     {title:"Skills", component: SkillsForm , key:"skills"},
     {title:"Summary", component: SummaryForm , key:"summary"},
 

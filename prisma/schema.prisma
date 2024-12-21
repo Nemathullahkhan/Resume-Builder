@@ -21,17 +21,19 @@ model Resume {
   title       String?
   description String?
 
-  photoUrl    String?
-  colorHex    String  @default("#000000")
-  borderStyle String  @default("squircle")
-  summary     String?
-  firstName   String?
-  lastName    String?
-  jobTitle    String?
-  city        String?
-  country     String?
-  phone       String?
-  email       String?
+  photoUrl        String?
+  colorHex        String  @default("#000000")
+  borderStyle     String  @default("squircle")
+  summary         String?
+  firstName       String?
+  lastName        String?
+  jobTitle        String?
+  city            String?
+  country         String?
+  phone           String?
+  email           String?
+  githubProfile   String?
+  linkedinProfile String?
 
   workExperiences WorkExperience[]
   educations      Education[]
@@ -44,15 +46,16 @@ model Resume {
 }
 
 model WorkExperience {
-  id          String    @id @default(cuid())
-  position    String?
-  company     String?
-  startDate   DateTime?
-  endDate     DateTime?
-  description String?
+  id              String    @id @default(cuid())
+  position        String?
+  company         String?
+  companyLocation String?
+  startDate       DateTime?
+  endDate         DateTime?
+  description     String?
 
   resumeId String
-  resume   Resume @relation(fields: [resumeId], references: [id],onDelete: Cascade)
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -65,11 +68,12 @@ model Education {
 
   degree    String?
   school    String?
+  cgpa      String?
   startDate DateTime?
   endDate   DateTime?
 
   resumeId String
-  resume   Resume @relation(fields: [resumeId], references: [id],onDelete: Cascade)
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -121,6 +121,7 @@ export default function WorkExperienceForm({
                 append({
                   position: "",
                   company: "",
+                  companyLocation: "",
                   startDate: "",
                   endDate: "",
                   description: "",
@@ -201,6 +202,19 @@ function WorkExperienceItem({
         render={({ field }) => (
           <FormItem>
             <FormLabel>Company</FormLabel>
+            <FormControl>
+              <Input {...field} autoFocus />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+       <FormField
+        control={form.control}
+        name={`workExperiences.${index}.companyLocation`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Company Location</FormLabel>
             <FormControl>
               <Input {...field} autoFocus />
             </FormControl>
