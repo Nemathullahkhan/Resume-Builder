@@ -322,35 +322,114 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
   );
 }
 
-function SkillsSection({ resumeData }: ResumeSectionProps) {
-  const { skills, colorHex, borderStyle } = resumeData;
+// function SkillsSection({ resumeData }: ResumeSectionProps) {
+//   const { skills, colorHex, borderStyle } = resumeData;
 
-  if (!skills?.length) return null;
+//   if (!skills?.length) return null;
+
+//   return (
+//     <>
+//       <hr className="border-2" />
+//       <div className="break-inside-avoid space-y-3">
+//         <p className="flex break-inside-avoid flex-wrap gap-2">Skills</p>
+//         <div className="flex break-inside-avoid flex-wrap gap-2">
+//           {skills.map((skill, index) => (
+//             <Badge
+//               key={index}
+//               className="rounded-md bg-black text-white hover:bg-black"
+//               style={{
+//                 backgroundColor: colorHex,
+//                 borderRadius:
+//                   borderStyle === BorderStyles.SQUARE
+//                     ? "0px"
+//                     : borderStyle === BorderStyles.CIRCLE
+//                       ? "9999px"
+//                       : "10%",
+//               }}
+//             >
+//               {skill}
+//             </Badge>
+//           ))}
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
+function SkillsSection({ resumeData }: ResumeSectionProps) {
+  const { skills, skillSet, colorHex, borderStyle } = resumeData;
+
+  // Check if both skills and skillSet are empty
+  if ((!skills?.length) && (!skillSet?.length)) return null;
 
   return (
     <>
       <hr className="border-2" />
       <div className="break-inside-avoid space-y-3">
-        <p className="flex break-inside-avoid flex-wrap gap-2">Skills</p>
-        <div className="flex break-inside-avoid flex-wrap gap-2">
-          {skills.map((skill, index) => (
-            <Badge
-              key={index}
-              className="rounded-md bg-black text-white hover:bg-black"
-              style={{
-                backgroundColor: colorHex,
-                borderRadius:
-                  borderStyle === BorderStyles.SQUARE
-                    ? "0px"
-                    : borderStyle === BorderStyles.CIRCLE
-                      ? "9999px"
-                      : "10%",
-              }}
-            >
-              {skill}
-            </Badge>
-          ))}
-        </div>
+        <h3 className="text-lg font-semibold">Skills</h3>
+        
+        {/* Render traditional skills */}
+        {skills?.length > 0 && (
+          <div className="flex break-inside-avoid flex-wrap gap-2">
+            {skills.map((skill, index) => (
+              <Badge
+                key={`skill-${index}`}
+                className="rounded-md bg-black text-white hover:bg-black"
+                style={{
+                  backgroundColor: colorHex,
+                  borderRadius:
+                    borderStyle === BorderStyles.SQUARE
+                      ? "0px"
+                      : borderStyle === BorderStyles.CIRCLE
+                        ? "9999px"
+                        : "10%",
+                }}
+              >
+                {skill}
+              </Badge>
+            ))}
+          </div>
+        )}
+
+        {/* Render new skillSet with categories */}
+        {skillSet?.map((skillCategory, categoryIndex) => (
+          <div key={`skillset-${categoryIndex}`} className="space-y-2">
+            {Object.entries(skillCategory)
+              .filter(([key, value]) => 
+                key !== 'id' && 
+                key !== 'resumeId' && 
+                key !== 'createdAt' && 
+                key !== 'updatedAt' && 
+                value
+              )
+              .map(([category, categorySkills]) => (
+                categorySkills && (
+                  <div key={category} className="space-y-1">
+                    <p className="font-medium capitalize">{category}:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {categorySkills.split(',').map((skill, skillIndex) => (
+                        <Badge
+                          key={`${category}-${skillIndex}`}
+                          className="rounded-md bg-black text-white hover:bg-black"
+                          style={{
+                            backgroundColor: colorHex,
+                            borderRadius:
+                              borderStyle === BorderStyles.SQUARE
+                                ? "0px"
+                                : borderStyle === BorderStyles.CIRCLE
+                                  ? "9999px"
+                                  : "10%",
+                          }}
+                        >
+                          {skill.trim()}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )
+              ))}
+          </div>
+        ))}
       </div>
     </>
   );

@@ -92,6 +92,22 @@ export const skillsSchema = z.object({
 
 export type SkillsValues = z.infer<typeof skillsSchema>;
 
+export const skillSchema = z.object({
+  skillSet:z.array(
+    z.object({
+      languages: optionalString,
+      frameworks: optionalString,
+      tools: optionalString,
+      libraries: optionalString,
+    })
+  )
+  .optional(),
+})
+
+export type SkillSetValues = z.infer<typeof skillSchema>;
+
+export type SkillSet = NonNullable<z.infer<typeof skillSchema>["skillSet"]>[number]
+
 export const summarySchema = z.object({
   summary: optionalString,
 });
@@ -105,6 +121,7 @@ export const resumeSchema = z.object({
   ...projectSchema.shape,
   ...educationSchema.shape,
   ...skillsSchema.shape,
+  ...skillSchema.shape,
   ...summarySchema.shape,
   colorHex: optionalString,
   borderStyle: optionalString,
