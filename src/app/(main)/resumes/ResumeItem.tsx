@@ -26,6 +26,8 @@ import { DialogContent, DialogDescription } from "@radix-ui/react-dialog";
 import LoadingButton from "@/components/LoadingButton";
 
 import {useReactToPrint} from "react-to-print"
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFResume } from "@/components/PDFResume";
 
 interface ResumeItemProps {
   resume: ResumeServerData;
@@ -38,6 +40,16 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
     contentRef,
     documentTitle: resume.title || "Resume"
   })
+
+  // PDF Download Function
+  const pdfDownloadFn = () => (
+    <PDFDownloadLink
+      document={<PDFResume resumeData={mapToResumeValues(resume)} />}
+      fileName={`${resume.title || 'Resume'}.pdf`}
+    >
+      {({ loading }) => (loading ? 'Loading...' : 'Download PDF')}
+    </PDFDownloadLink>
+  );
 
   const wasUpdated = resume.updatedAt !== resume.createdAt;
 
@@ -71,7 +83,7 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
         </Link>
       </div>
-      <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
+      <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn}  onPDFDownload={pdfDownloadFn} />
     </div>
   );
 }
@@ -79,9 +91,10 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
 interface MoreMenuProps {
   resumeId: string;
   onPrintClick:()=> void;
+  onPDFDownload: () => React.ReactNode;
 }
 
-function MoreMenu({ resumeId,onPrintClick }: MoreMenuProps) {
+function MoreMenu({ resumeId,onPrintClick,  onPDFDownload  }: MoreMenuProps) {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   return (
@@ -110,6 +123,13 @@ function MoreMenu({ resumeId,onPrintClick }: MoreMenuProps) {
               <Printer className="size-4"/>
               Print
           </DropdownMenuItem>
+          {onPDFDownload && (
+          <DropdownMenuItem
+            className="flex items-center gap-2"
+          >
+            {onPDFDownload()}
+          </DropdownMenuItem>
+        )}
         </DropdownMenuContent>
       </DropdownMenu>
       <DeleteConfirmationDialog

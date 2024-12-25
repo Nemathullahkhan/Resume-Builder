@@ -60,7 +60,11 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       tools: skill.tools || undefined,
       libraries: skill.libraries || undefined,
     })),
-    skills: data.skills,
+    custom: data.custom.map((val)=>({
+      heading: val.heading || undefined,
+      description: val.description || undefined,
+      link: val.link || undefined,
+    })),
     borderStyle: data.borderStyle,
     colorHex: data.colorHex,
     summary: data.summary || undefined,

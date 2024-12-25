@@ -107,7 +107,7 @@ export async function saveResume(values: ResumeValues) {
 
   console.log("received values", values);
 
-  const { photo, workExperiences, educations, projects, ...resumeValues } =
+  const { photo, workExperiences, educations, projects,skillSet, ...resumeValues } =
     resumeSchema.parse(values);
 
   const { userId } = await auth();
@@ -171,8 +171,14 @@ export async function saveResume(values: ResumeValues) {
             ...proj,
           })),
         },
-        updatedAt: new Date(),  
+      skillSet:{
+        deleteMany:{},
+        create: skillSet?.map((skill)=>({...skill,
+        })),
       },
+      updatedAt: new Date(),  
+    },
+      
     });
   } else {
     return prisma.resume.create({
@@ -199,6 +205,11 @@ export async function saveResume(values: ResumeValues) {
             ...proj,
           })),
         },
+        skillSet:{
+          create: skillSet?.map((skill)=>({
+            ...skill,
+          }))
+        }
       }
     });
   }

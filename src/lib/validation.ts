@@ -108,6 +108,20 @@ export type SkillSetValues = z.infer<typeof skillSchema>;
 
 export type SkillSet = NonNullable<z.infer<typeof skillSchema>["skillSet"]>[number]
 
+export const customSchema = z.object({
+  custom:z.array(
+    z.object({
+      heading: optionalString,
+      description: optionalString,
+      link: optionalString
+    })
+  )
+})
+
+export type customValues = z.infer<typeof customSchema>;
+
+export type customSet = NonNullable<z.infer<typeof customSchema>["custom"]>[number]
+
 export const summarySchema = z.object({
   summary: optionalString,
 });
@@ -122,6 +136,7 @@ export const resumeSchema = z.object({
   ...educationSchema.shape,
   ...skillsSchema.shape,
   ...skillSchema.shape,
+  ...customSchema.shape,
   ...summarySchema.shape,
   colorHex: optionalString,
   borderStyle: optionalString,
@@ -146,7 +161,9 @@ export const generateSummarySchema = z.object({
   jobTitle: optionalString,
   ...workExperienceSchema.shape,
   ...educationSchema.shape,
-  ...skillsSchema.shape,
+  ...skillSchema.shape,
+  ...customSchema.shape,
+  
 });
 
 export const generateProjectSchema = z.object({
