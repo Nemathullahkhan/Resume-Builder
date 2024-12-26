@@ -11,6 +11,9 @@ export const resumeDataInclude =  {
     educations: true,
     projects: true,
     skillSet: true,
+    courses: true,
+    contests: true,
+    codingProfiles: true,
     custom: true,
   } satisfies Prisma.ResumeInclude;
 

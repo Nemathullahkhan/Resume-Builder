@@ -60,6 +60,21 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       tools: skill.tools || undefined,
       libraries: skill.libraries || undefined,
     })),
+    courses: data.courses.map((val)=>({
+      course:val.course || undefined,
+      courseLink:val.courseLink || undefined,
+      description:val.description || undefined,
+    })),
+    contests: data.contests.map((val)=>({
+      contest: val.contest|| undefined,
+      contestStanding: val.contestStanding||undefined,
+      description:val.description || undefined,
+    })),
+    codingProfiles: data.codingProfiles.map((val)=>({
+      codingProfile: val.codingProfile || undefined,
+      codingProfileLink: val.codingProfileLink || undefined,
+      description:val.description || undefined,
+    })),
     custom: data.custom.map((val)=>({
       heading: val.heading || undefined,
       description: val.description || undefined,

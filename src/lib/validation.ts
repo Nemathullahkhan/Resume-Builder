@@ -116,11 +116,61 @@ export const customSchema = z.object({
       link: optionalString
     })
   )
+  .optional(),
 })
 
 export type customValues = z.infer<typeof customSchema>;
 
 export type customSet = NonNullable<z.infer<typeof customSchema>["custom"]>[number]
+
+export const courseSchema = z.object({
+  courses:z.array(
+    z.object({
+      course : optionalString,
+      courseLink : optionalString,
+      description: optionalString,
+    })
+  )
+  .optional()
+})
+
+export type courseValues = z.infer<typeof courseSchema>;
+
+export type courseSet = NonNullable<z.infer<typeof courseSchema>["courses"]>[number]
+
+export const contestSchema = z.object({
+  contests:z.array(
+    z.object({
+      contest : optionalString,
+      contestStanding : optionalString,
+      description: optionalString,
+    })
+  )
+  .optional()
+})
+export type contestValues = z.infer<typeof contestSchema>;
+export type contestSet = NonNullable<z.infer<typeof contestSchema>["contests"]>[number]
+
+export const codingProfileSchema = z.object({
+  codingProfiles:z.array(
+    z.object({
+      codingProfile : optionalString,
+      codingProfileLink : optionalString,
+      description: optionalString,
+    })
+  )
+  .optional()
+})
+
+export type codingProfileValues = z.infer<typeof codingProfileSchema>;
+
+export type codingProfileSet = NonNullable<z.infer<typeof codingProfileSchema>["codingProfiles"]>[number]
+
+
+
+
+
+
 
 export const summarySchema = z.object({
   summary: optionalString,
@@ -134,7 +184,10 @@ export const resumeSchema = z.object({
   ...workExperienceSchema.shape,
   ...projectSchema.shape,
   ...educationSchema.shape,
-  ...skillsSchema.shape,
+  // ...skillsSchema.shape,
+  ...courseSchema.shape,
+  ...contestSchema.shape,
+  ...codingProfileSchema.shape,
   ...skillSchema.shape,
   ...customSchema.shape,
   ...summarySchema.shape,

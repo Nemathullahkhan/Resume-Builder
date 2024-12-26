@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef } from "react";
-import { EditoFormProps } from "@/lib/types";
+import { EditorFormProps } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
 export default function PersonalInfoForm({
   resumeData,
   setResumeData,
-}: EditoFormProps) {
+}: EditorFormProps) {
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {

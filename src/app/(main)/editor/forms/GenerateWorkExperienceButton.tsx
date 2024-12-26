@@ -94,13 +94,18 @@ function InputDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog 
+    open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Generate work experience</DialogTitle>
           <DialogDescription>
             Describe this work experience and the AI will generate an optimized
             entry for you.
+
+            <p className="font-bold m-2">NOTE : Please read the text inside the the textarea as it will you give the idea of how to write the prompt</p>
+                                       
+              
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -112,9 +117,25 @@ function InputDialog({
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea
+                    <Textarea className="max-w-full overflow-auto"
                       {...field}
-                      placeholder={`E.g: "from nov 2019 to dec 2020 I worked at google as a software engineer, tasks were: ......`}
+                      placeholder={` You can start typing here..
+
+E.g: "Create a professional and detailed job description for the role of [Job Position] at [Company Name], located in [Company Location]. Include the following details:
+
+Date of Joining: [Provide the date of joining].
+
+Current Date: [Provide the current date].
+
+Overview of Role: Write a concise summary of the role
+
+Key Responsibilities: List the tasks and responsibilities associated with the role
+
+Achievements (Optional): Highlight any notable accomplishments or milestones achieved in the position so far.
+
+Impact and Growth Opportunities: Emphasize the value the position adds to the company and opportunities for professional growth.
+
+Ensure the tone is professional and engaging, tailored to showcase the role's importance and the candidate's contributions."`}
                       autoFocus
                     />
                   </FormControl>

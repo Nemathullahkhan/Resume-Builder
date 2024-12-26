@@ -40,7 +40,11 @@ model Resume {
   skills          String[]
   skillSet        SkillSet[]
   projects        Projects[]
+  courses         Courses[]
+  contests        Contests[]
+  codingProfiles  CodingProfile[]
   custom          Custom[]
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -116,6 +120,48 @@ model SkillSet {
   @@map("skillSet")
 }
 
+
+model Courses{
+  id String @id @default(cuid())
+  course String?
+  courseLink String?
+  description String?
+  resumeId String
+  resume Resume @relation(fields: [resumeId],references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("custom_courses")
+}
+
+model Contests {
+  id String @id @default(cuid())
+   contest String?
+  contestStanding String?
+  description String?
+
+  resumeId String
+  resume Resume @relation(fields: [resumeId],references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("custom_contests")
+}
+
+model CodingProfile {
+  id String @id @default(cuid())
+  codingProfile String?
+  codingProfileLink String?
+  description String?
+  resumeId String
+  resume Resume @relation(fields: [resumeId],references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("custom_codingProfiles")
+
+}
 model Custom {
   id String @id @default(cuid())
   heading String?

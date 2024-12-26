@@ -468,7 +468,17 @@ function SkillItem({ id, form, index, remove }: SkillItemProps) {
     <div className={cn("space-y-3 rounded-md border bg-background p-3")}>
       <div className="flex justify-between gap-2">
         <span className="font-semibold">Technical Skills</span>
+        <Button
+        variant="destructive"
+        type="button"
+        onClick={() => {
+          remove(index);
+        }}
+      >
+        Remove
+      </Button>
       </div>
+      
       <FormField
         control={form.control}
         name={`skillSet.${index}.languages`}
@@ -521,15 +531,7 @@ function SkillItem({ id, form, index, remove }: SkillItemProps) {
           </FormItem>
         )}
       />
-      <Button
-        variant="destructive"
-        type="button"
-        onClick={() => {
-          remove(index);
-        }}
-      >
-        Remove
-      </Button>
+      
     </div>
   );
 }

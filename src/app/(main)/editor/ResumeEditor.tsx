@@ -55,7 +55,7 @@ export default function ResumeEditor({resumeToEdit}:ResumeEditorProps) {
       </header>
       <main className="relative grow">
         <div className="absolute bottom-0 top-0 flex w-full">
-          <div className={cn("w-full overflow-y-auto p-3 md:w-1/2 md:block space-y-6 scrollbar-custom max-h-[500px]",showSmResumePreview && "hidden")}>
+          <div className={cn("w-full overflow-y-auto p-7 md:w-1/2 md:block space-y-6 scrollbar-custom max-h-[500px]",showSmResumePreview && "hidden")}>
           <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep}/>
             {FormComponent && <FormComponent
               resumeData = {resumeData}

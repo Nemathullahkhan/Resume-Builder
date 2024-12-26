@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { formatDate } from "date-fns";
 import { Badge } from "./ui/badge";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
-import { Github, Linkedin } from "lucide-react";
+import { Github, Heading, Linkedin } from "lucide-react";
 
 interface ResumePreviewProps {
   resumeData: ResumeValues;
@@ -46,7 +46,8 @@ export default function ResumePreview({
         <WorkExperienceSection resumeData={resumeData} />
         <ProjectSection resumeData={resumeData} />
         <SkillSet resumeData={resumeData} />
-        <SkillsSection resumeData={resumeData} />
+        <CustomSection resumeData = {resumeData} />
+        {/* <SkillsSection resumeData={resumeData} /> */}
       </div>
     </div>
   );
@@ -195,7 +196,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
       </div>
         <hr className="-mt-3 h-0.5 bg-black" />
         {workExperiencesNotEmpty.map((exp, index) => (
-          <div key={index} className="break-inside-avoid">
+<div key={index} className="break-inside-avoid">
             <div className="m-0.5 -mt-1.5 -mb-1.5 flex items-center justify-between pl-1.5 text-sm font-semibold">
               <span className="text-lg">{exp.position}</span>
               {exp.startDate && (
@@ -310,7 +311,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
             </div>
             <div className="ml-2 m-0.5 whitespace-pre-line pl-1.5 text-sm italic tracking-wide">
               {/* <span>{edu.school}</span> */}
-              <div className="-mt-1 flex items-center justify-between text-muted font-light tracking-wide">
+              <div className="-mt-1 flex items-center justify-between  font-light tracking-wide">
                 <span>{edu.school}</span>
                 {edu.cgpa && (
                   <span className="text-sm tracking pr-1">
@@ -377,39 +378,65 @@ function SkillSet({resumeData}:ResumeSectionProps){
 
 }
 
+function CustomSection ({resumeData}: ResumeSectionProps){
+ const {custom} = resumeData;
 
+ const customNotEmpty = custom?.filter((val)=> Object.values(val).filter(Boolean).length>0);
 
+ if(!customNotEmpty?.length) return null;
 
-function SkillsSection({ resumeData }: ResumeSectionProps) {
-  const { skills, colorHex, borderStyle } = resumeData;
-
-  if (!skills?.length) return null;
-
-  return (
-    <>
-      <hr className="border-2" />
-      <div className="break-inside-avoid space-y-3">
-        <p className="flex break-inside-avoid flex-wrap gap-2">Skills</p>
-        <div className="flex break-inside-avoid flex-wrap gap-2">
-          {skills.map((skill, index) => (
-            <Badge
-              key={index}
-              // className="rounded-md bg-black text-white hover:bg-black"
-              style={{
-                backgroundColor: colorHex,
-                borderRadius:
-                  borderStyle === BorderStyles.SQUARE
-                    ? "0px"
-                    : borderStyle === BorderStyles.CIRCLE
-                      ? "9999px"
-                      : "10%",
-              }}
-            >
-              {skill}
-            </Badge>
-          ))}
+ return (
+  <>
+    {customNotEmpty.map((val, index) => (
+      <div key={index} className="-mt-3 break-inside-avoid space-y-2 font-['Computer_Modern']">
+        <div className="-mb-3 flex text-2xl font-bold tracking-wide">
+          {val.heading?.charAt(0)}
+          <span className="mt-1 items-center text-lg font-bold">
+            {val.heading?.slice(1)}
+          </span>
+        </div>
+        <hr className="border-1 bg-black" />
+        <div className="text-sm whitespace-pre-line -mt-1 pl-4 pr-2">
+          {val.description}
         </div>
       </div>
-    </>
-  );
+    ))}
+  </>
+);
 }
+
+
+
+// function SkillsSection({ resumeData }: ResumeSectionProps) {
+//   const { skills, colorHex, borderStyle } = resumeData;
+
+//   if (!skills?.length) return null;
+
+//   return (
+//     <>
+//       <hr className="border-2" />
+//       <div className="break-inside-avoid space-y-3">
+//         <p className="flex break-inside-avoid flex-wrap gap-2">Skills</p>
+//         <div className="flex break-inside-avoid flex-wrap gap-2">
+//           {skills.map((skill, index) => (
+//             <Badge
+//               key={index}
+//               // className="rounded-md bg-black text-white hover:bg-black"
+//               style={{
+//                 backgroundColor: colorHex,
+//                 borderRadius:
+//                   borderStyle === BorderStyles.SQUARE
+//                     ? "0px"
+//                     : borderStyle === BorderStyles.CIRCLE
+//                       ? "9999px"
+//                       : "10%",
+//               }}
+//             >
+//               {skill}
+//             </Badge>
+//           ))}
+//         </div>
+//       </div>
+//     </>
+//   );
+// }

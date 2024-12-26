@@ -107,7 +107,7 @@ export async function saveResume(values: ResumeValues) {
 
   console.log("received values", values);
 
-  const { photo, workExperiences, educations, projects,skillSet, ...resumeValues } =
+  const { photo, workExperiences, educations, projects,skillSet,courses,contests, codingProfiles, custom, ...resumeValues } =
     resumeSchema.parse(values);
 
   const { userId } = await auth();
@@ -176,6 +176,26 @@ export async function saveResume(values: ResumeValues) {
         create: skillSet?.map((skill)=>({...skill,
         })),
       },
+      courses:{
+        deleteMany:{},
+        create: courses?.map((val)=>({...val,
+        })),
+      },
+      contests:{
+        deleteMany:{},
+        create: contests?.map((val)=>({...val,
+        })),
+      },
+      codingProfiles:{
+        deleteMany:{},
+        create: codingProfiles?.map((val)=>({...val,
+        })),
+      },
+      custom:{
+        deleteMany:{},
+        create: custom?.map((val)=>({...val,
+        }))
+      },
       updatedAt: new Date(),  
     },
       
@@ -209,6 +229,24 @@ export async function saveResume(values: ResumeValues) {
           create: skillSet?.map((skill)=>({
             ...skill,
           }))
+        },
+        courses:{
+          create: courses?.map((val)=>({
+            ...val,
+          }))
+        },
+        contests:{
+          create: contests?.map((val)=>({
+            ...val,
+          }))
+        },
+        codingProfiles:{
+          create: codingProfiles?.map((val)=>({
+            ...val,
+          }))
+        },
+        custom:{
+          create: custom?.map((val)=>({...val}) )
         }
       }
     });
