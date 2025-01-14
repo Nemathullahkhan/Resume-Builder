@@ -39,7 +39,7 @@ export default async function Page() {
   // todo : check for non-premium users
 
   return (
-    <main className="max-auto mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
+    <main className="max-auto mx-auto w-full max-w-6xl space-y-2 px-3 py-6 m-4">
       <Button asChild className="mx-auto flex w-fit gap-2">
         <Link href={"/editor"}>
           <PlusSquare className="size-5" />

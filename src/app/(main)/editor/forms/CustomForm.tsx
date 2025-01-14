@@ -6,6 +6,7 @@
 
   import { EditorFormProps } from "@/lib/types";
 import CoursesForm from "./CoursesForm";
+import CustomizedForm from "./CustomizedForm";
   
   export default function CustomForm({ resumeData, setResumeData }: EditorFormProps) {
     // State for managing visible sections
@@ -75,7 +76,8 @@ import CoursesForm from "./CoursesForm";
             <p className="text-muted-foreground">
               Add any custom information here.
             </p>
-            {/* You can add a CustomForm section if needed */}
+            <CustomizedForm resumeData={resumeData} 
+            setResumeData={setResumeData}/>
           </div>
         )}
       </div>

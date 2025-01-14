@@ -167,11 +167,12 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
   return (
     <>
       <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
-        <div className="text-md -mb-2.5 flex tracking-wider">
+        <div className="text-md -mb-2.5 flex tracking-wider"
+         style={{ color: colorHex }}>
           P
           <span className="mt-1 items-center text-xs">ROFESSIONAL PROFILE</span>
         </div>
-        <div className="-mb-3 h-[1px] w-full bg-black" />
+        <div className="-mb-3 h-[1px] w-full bg-black"  style={{ background: colorHex }}/>
         <p className="-mt-1 ml-2 whitespace-pre-line text-sm">{summary}</p>
       </div>
     </>
@@ -190,10 +191,10 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   return (
     <>
       <div className="-mt-4 break-inside-avoid space-y-2 font-['Computer_Modern']">
-        <div className="text-md -mb-2.5 flex tracking-wider">
+        <div className="text-md -mb-2.5 flex tracking-wider"style={{ color: colorHex }} >
           E <span className="mt-1 items-center text-xs">XPERIENCE</span>
         </div>
-        <div className="-mb-3 h-[1px] w-full bg-black" />
+        <div className="-mb-3 h-[1px] w-full bg-black" style={{ background: colorHex }} />
         {workExperiencesNotEmpty.map((exp, index) => (
           <div key={index} className="break-inside-avoid">
             <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 text-sm font-semibold">
@@ -241,7 +242,7 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
       >
         P <span className="mt-1 items-center text-xs">ROJECTS</span>
       </div>
-      <div className="-mb-3 h-[1px] w-full bg-black" />
+      <div className="-mb-3 h-[1px] w-full bg-black"style={{ background: colorHex }} />
       {projectsNotEmpty.map((proj, index) => (
         <div key={index} className="break-inside-avoid">
           <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold">
@@ -287,10 +288,11 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
   return (
     <>
       <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
-        <div className="text-md -mb-2.5 flex tracking-wider">
+        <div className="text-md -mb-2.5 flex tracking-wider"  style={{ color: colorHex }}>
           E <span className="mt-1 items-center text-xs">DUCATION</span>
         </div>
-        <div className="-mb-3 h-[1px] w-full bg-black" />
+        <div className="-mb-3 h-[1px] w-full bg-black "
+        style={{ background: colorHex }} />
         {educationNotEmpty.map((edu, index) => (
           <div key={index} className="break-inside-avoid">
             <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold">
@@ -329,7 +331,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 }
 
 function SkillSet({ resumeData }: ResumeSectionProps) {
-  const { skillSet } = resumeData;
+  const { skillSet,colorHex } = resumeData;
   const skillNotEmpty = skillSet?.filter(
     (skill) => Object.values(skill).filter(Boolean).length > 0,
   );
@@ -339,10 +341,10 @@ function SkillSet({ resumeData }: ResumeSectionProps) {
   return (
     <>
       <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
-        <div className="text-md -mb-2.5 flex tracking-wide">
+        <div className="text-md -mb-2.5 flex tracking-wide"style={{ color: colorHex }}>
           T <span className="mt-1 items-center text-xs">ECHNICAL SKILLS</span>
         </div>
-        <div className="-mb-3 h-[1px] w-full bg-black" />
+        <div className="-mb-3 h-[1px] w-full bg-black" style={{ background: colorHex }} />
         {skillNotEmpty.map((skill, index) => (
           <div key={index} className="break-inside-avoid">
             <div className="-mt-1.5 flex flex-col pl-3.5 pr-2">
@@ -385,7 +387,7 @@ function SkillSet({ resumeData }: ResumeSectionProps) {
 }
 
 function CustomSection({ resumeData }: ResumeSectionProps) {
-  const { custom } = resumeData;
+  const { custom,colorHex } = resumeData;
 
   const customNotEmpty = custom?.filter(
     (val) => Object.values(val).filter(Boolean).length > 0,
@@ -398,18 +400,18 @@ function CustomSection({ resumeData }: ResumeSectionProps) {
       {customNotEmpty.map((val, index) => (
         <div
           key={index}
-          className="-mt-3 break-inside-avoid space-y-2 font-['Computer_Modern']"
+          className="-mt-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']"
         >
-          <div className="-mb-3 flex text-2xl font-bold tracking-wide">
+          <div className="-mb-3 flex text-[16px]  tracking-wider"style={{ color: colorHex }}>
             {val.heading?.charAt(0)}
-            <span className="mt-1 items-center text-lg font-bold">
+            <span className="mt-1 items-center text-xs ">
               {val.heading?.slice(1)}
             </span>
           </div>
-          <hr className="border-1 bg-black" />
-          <div className="-mt-1 whitespace-pre-line pl-4 pr-2 text-sm">
+          <div className="-mb-3 h-[1px] w-full bg-black" style={{ background: colorHex }}/>
+          <p className="m-0.5 -mt-1.5 overflow-hidden whitespace-pre-line break-words pl-6 pr-5 text-sm">   
             {val.description}
-          </div>
+          </p>
         </div>
       ))}
     </>
@@ -433,7 +435,7 @@ function CodingProfileSection({ resumeData }: ResumeSectionProps) {
       >
         C <span className="mt-1 items-center text-xs">ODING PROFILES</span>
       </div>
-      <div className="-mb-3 h-[1px] w-full bg-black" />
+      <div className="-mb-3 h-[1px] w-full bg-black" style={{ background: colorHex }}/>
 
       {codingProfilesNotEmpty.map((prof, index) => (
         <div key={index} className="break-inside-avoid">
@@ -481,7 +483,7 @@ function CoursesSection({ resumeData }: ResumeSectionProps) {
       >
         C <span className="mt-1 items-center text-xs">ERTIFICATIONS</span>
       </div>
-      <div className="-mb-3 h-[1px] w-full bg-black" />
+      <div className="-mb-3 h-[1px] w-full bg-black"style={{ background: colorHex }} />
 
       {coursesNotEmpty.map((course, index) => (
         <div key={index} className="break-inside-avoid">
