@@ -20,8 +20,8 @@ export const steps: {
     {title:"Education", component: EducationForm , key:"education"},
     {title:"Work experience", component: WorkExperienceForm , key:"work-experience"},
     {title:"Projects", component: ProjectsForm , key:"projects"},
-    {title:"Custom",component:CustomForm, key:"custom"},
     {title:"Skills", component: SkillsForm , key:"skills"},
+    {title:"Custom",component:CustomForm, key:"custom"},
     {title:"Summary", component: SummaryForm , key:"summary"},
 
 

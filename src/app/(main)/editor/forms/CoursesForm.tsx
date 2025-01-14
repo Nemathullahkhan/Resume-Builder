@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { codingProfileSchema, codingProfileValues } from "@/lib/validation";
+import { courseSchema, courseValues } from "@/lib/validation";
 import {
   closestCenter,
   DndContext,
@@ -34,14 +33,14 @@ import { useEffect } from "react";
 import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function CodingProfilesForm({
+export default function CoursesForm({
   resumeData,
   setResumeData,
 }: EditorFormProps) {
-  const form = useForm<codingProfileValues>({
-    resolver: zodResolver(codingProfileSchema),
+  const form = useForm<courseValues>({
+    resolver: zodResolver(courseSchema),
     defaultValues: {
-      codingProfiles: resumeData.codingProfiles || [],
+        courses: resumeData.courses || [],
     },
   });
 
@@ -51,7 +50,7 @@ export default function CodingProfilesForm({
       if (!isValid) return;
       setResumeData({
         ...resumeData,
-        codingProfiles: values.codingProfiles?.filter((proj) => proj !== undefined) || [],
+        courses: values.courses?.filter((course) => course !== undefined) || [],
       });
     });
     return unsubscribe;
@@ -59,7 +58,7 @@ export default function CodingProfilesForm({
 
   const { fields, append, remove, move } = useFieldArray({
     control: form.control,
-    name: "codingProfiles",
+    name: "courses",
     keyName: "id",
   });
 
@@ -98,7 +97,7 @@ export default function CodingProfilesForm({
               strategy={verticalListSortingStrategy}
             >
               {fields.map((field, index) => (
-                <ProjectItem
+                <CourseItem
                   id={field.id}
                   key={field.id}
                   index={index}
@@ -113,13 +112,13 @@ export default function CodingProfilesForm({
               type="button"
               onClick={() =>
                 append({
-                  codingProfile: "",
-                  codingProfileLink: "",
+                  course: "",
+                  courseLink: "",
                   description: "",
                 })
               }
             >
-              Add Profiles
+              Add Certifications
             </Button>
           </div>
         </form>
@@ -130,12 +129,12 @@ export default function CodingProfilesForm({
 
 interface ProjectItemProps {
   id: string;
-  form: UseFormReturn<codingProfileValues>;
+  form: UseFormReturn<courseValues>;
   index: number;
   remove: (index: number) => void;
 }
 
-function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
+function CourseItem({ id, form, index, remove }: ProjectItemProps) {
   const {
     attributes,
     listeners,
@@ -158,7 +157,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
       }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">Coding Profile: {index + 1}</span>
+        <span className="font-semibold">Cerifications:  {index + 1}</span>
         <GripHorizontal
           className="size-5 cursor-grab text-muted-foreground focus:outline-none"
           {...attributes}
@@ -168,10 +167,10 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
 
       <FormField
         control={form.control}
-        name={`codingProfiles.${index}.codingProfile`}
+        name={`courses.${index}.course`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Coding Profile</FormLabel>
+            <FormLabel>Course</FormLabel>
             <FormControl>
               <Input {...field} autoFocus />
             </FormControl>
@@ -181,10 +180,10 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
 
       <FormField
         control={form.control}
-        name={`codingProfiles.${index}.codingProfileLink`}
+        name={`courses.${index}.courseLink`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Profile Link</FormLabel>
+            <FormLabel>Attachment Link</FormLabel>
             <FormControl>
               <Input {...field} autoFocus />
             </FormControl>
@@ -194,7 +193,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
 
       <FormField
         control={form.control}
-        name={`codingProfiles.${index}.description`}
+        name={`courses.${index}.description`}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Description</FormLabel>

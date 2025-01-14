@@ -1,4 +1,4 @@
- import useDimensions from "@/hooks/useDimensions";
+import useDimensions from "@/hooks/useDimensions";
 import { cn } from "@/lib/utils";
 import { resumeSchema, ResumeValues, skillSchema } from "@/lib/validation";
 import Image from "next/image";
@@ -32,7 +32,7 @@ export default function ResumePreview({
       ref={containerRef}
     >
       <div
-        className={cn("space-y-2 p-6 m-3.5", !width && "invisible")}
+        className={cn("m-3.5 space-y-2 p-6", !width && "invisible")}
         style={{
           zoom: (1 / 794) * width,
         }}
@@ -46,9 +46,10 @@ export default function ResumePreview({
         <WorkExperienceSection resumeData={resumeData} />
         <ProjectSection resumeData={resumeData} />
         <SkillSet resumeData={resumeData} />
-        <CustomSection resumeData = {resumeData} />
-        <CodingProfileSection resumeData = {resumeData} />
-        
+        <CustomSection resumeData={resumeData} />
+        <CodingProfileSection resumeData={resumeData} />
+        <CoursesSection resumeData = {resumeData} />
+
         {/* <SkillsSection resumeData={resumeData} /> */}
       </div>
     </div>
@@ -85,7 +86,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
   }, [photo]);
 
   return (
-    <div className="flex items-center gap-6 font-['Computer_Modern'] mb-5">
+    <div className="mb-5 flex items-center gap-6 font-['Computer_Modern']">
       {photoSrc && (
         <Image
           src={photoSrc}
@@ -114,7 +115,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           <p className="text-xl font-semibold">{jobTitle}</p>
         </div>
         <p className="text-black-500 flex items-center justify-center gap-2 text-xs font-light tracking-wide">
-          {city}  
+          {city}
           {city && country ? " | " : ""}
           {country}
           {(city || country) && (phone || email) ? " | " : ""}
@@ -165,19 +166,17 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
   if (!summary) return null;
   return (
     <>
-      <div className="break-inside-avoid space-y-1.5 font-['Computer_Modern'] -mb-3 ">
-      <div
-        className="-mb-2.5 flex text-md tracking-wider"
-      >
-        P<span className=" items-center text-xs mt-1 ">ROFESSIONAL PROFILE</span>
-      </div>
-      <div className="w-full h-[1px] -mb-3 bg-black"/>
-        <p className="ml-2 -mt-1 whitespace-pre-line text-sm">{summary}</p>
+      <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
+        <div className="text-md -mb-2.5 flex tracking-wider">
+          P
+          <span className="mt-1 items-center text-xs">ROFESSIONAL PROFILE</span>
+        </div>
+        <div className="-mb-3 h-[1px] w-full bg-black" />
+        <p className="-mt-1 ml-2 whitespace-pre-line text-sm">{summary}</p>
       </div>
     </>
   );
 }
-
 
 function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   const { workExperiences, colorHex } = resumeData;
@@ -191,18 +190,16 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   return (
     <>
       <div className="-mt-4 break-inside-avoid space-y-2 font-['Computer_Modern']">
-      <div
-        className="-mb-2.5 flex text-md tracking-wider"
-      >
-        E <span className="mt-1 items-center text-xs ">XPERIENCE</span>
-      </div>
-      <div className="w-full h-[1px] -mb-3 bg-black"/>
+        <div className="text-md -mb-2.5 flex tracking-wider">
+          E <span className="mt-1 items-center text-xs">XPERIENCE</span>
+        </div>
+        <div className="-mb-3 h-[1px] w-full bg-black" />
         {workExperiencesNotEmpty.map((exp, index) => (
-<div key={index} className="break-inside-avoid ">
-            <div className=" -mt-1.5  flex items-center justify-between pl-3 pr-2 text-sm font-semibold ">
+          <div key={index} className="break-inside-avoid">
+            <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 text-sm font-semibold">
               <span className="text-[16px]">{exp.position}</span>
               {exp.startDate && (
-                <span >
+                <span>
                   {formatDate(exp.startDate, "MM,yyyy")} -{" "}
                   {exp.endDate ? formatDate(exp.endDate, "MM,yyyy") : "Present"}
                 </span>
@@ -211,13 +208,13 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
             <div className="m-0.5 -mt-1 flex items-center justify-between pl-2.5 text-sm font-light italic tracking-wide">
               <span>{exp.company}</span>
               {exp.companyLocation && (
-                <span className="text-sm tracking-wider pr-3">
+                <span className="pr-3 text-sm tracking-wider">
                   {exp.companyLocation}
                 </span>
               )}
             </div>
             {/* <p className="pl-2.5  m-0.5 text-xs font-semibold italic ">{exp.company}</p> */}
-            <div className="text-sm whitespace-pre-wrap -mt-1 mb-2.5  pl-6 pr-5">
+            <div className="-mt-1 mb-2.5 whitespace-pre-wrap pl-6 pr-5 text-sm">
               {exp.description}
             </div>
           </div>
@@ -227,53 +224,54 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   );
 }
 
-
-function ProjectSection ({resumeData}: ResumeSectionProps){
-  const {projects, colorHex} = resumeData;
+function ProjectSection({ resumeData }: ResumeSectionProps) {
+  const { projects, colorHex } = resumeData;
 
   const projectsNotEmpty = projects?.filter(
     (proj) => Object.values(proj).filter(Boolean).length > 0,
   );
 
-  if(!projectsNotEmpty?.length) return null;
-  
+  if (!projectsNotEmpty?.length) return null;
+
   return (
-    
     <div className="-mt-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
       <div
-        className="-mb-2.5 flex text-md tracking-wider"
+        className="text-md -mb-2.5 flex tracking-wider"
         style={{ color: colorHex }}
       >
-        P <span className="mt-1 items-center text-xs ">ROJECTS</span>
+        P <span className="mt-1 items-center text-xs">ROJECTS</span>
       </div>
-      <div className="w-full h-[1px] -mb-3 bg-black"/>
+      <div className="-mb-3 h-[1px] w-full bg-black" />
       {projectsNotEmpty.map((proj, index) => (
         <div key={index} className="break-inside-avoid">
-          <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2  font-semibold">
+          <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold">
             {/* <span>{proj.projectName}</span> */}
-            <p className="text-black-500 flex items-center justify-center gap-2 text-[16px] ">
-          {proj.projectName}
-          {proj.projectName && proj.techStack ? " | " : ""}
-          <span className="italic text-sm mb-1 items-center mt-1 font-thin">{proj.techStack}</span>
-          </p>
+            <p className="text-black-500 flex items-center justify-center gap-2 text-[16px]">
+              {proj.projectName}
+              {proj.projectName && proj.techStack ? " | " : ""}
+              <span className="mb-1 mt-1 items-center text-sm font-thin italic">
+                {proj.techStack}
+              </span>
+            </p>
             {proj.link && (
               <a
                 href={proj.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[16px]  no-underline"
+                className="text-[16px] no-underline"
               >
-                <span className="items-center text-sm tracking-wide italic underline-offset-auto">Link: {proj.projectName}</span>
+                <span className="items-center text-sm italic tracking-wide underline-offset-auto">
+                  Link: {proj.projectName}
+                </span>
               </a>
             )}
           </div>
-          <div className="text-sm -mt-1.5 whitespace-pre-line m-0.5 pl-6  pr-5">
-              {proj.description}
-            </div>
+          <div className="m-0.5 -mt-1.5 whitespace-pre-line pl-6 pr-5 text-sm">
+            {proj.description}
+          </div>
         </div>
       ))}
     </div>
-  
   );
 }
 
@@ -288,19 +286,17 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <div className="-mb-3  break-inside-avoid space-y-1.5 font-['Computer_Modern']">
-      <div
-        className="-mb-2.5 flex text-md tracking-wider"
-      >
-        E <span className="mt-1 items-center text-xs">DUCATION</span>
-      </div>
-      <div className="w-full h-[1px] -mb-3 bg-black"/>
+      <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
+        <div className="text-md -mb-2.5 flex tracking-wider">
+          E <span className="mt-1 items-center text-xs">DUCATION</span>
+        </div>
+        <div className="-mb-3 h-[1px] w-full bg-black" />
         {educationNotEmpty.map((edu, index) => (
-          <div key={index} className="break-inside-avoid ">
-            <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold ">
+          <div key={index} className="break-inside-avoid">
+            <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold">
               <span className="text-[16px]">{edu.degree}</span>
               {edu.startDate && (
-                <span className="font-normal text-md">
+                <span className="text-md font-normal">
                   {edu.endDate && !edu.startDate
                     ? formatDate(edu.endDate, "MM,yyyy")
                     : edu.startDate && edu.endDate
@@ -311,13 +307,16 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
                 </span>
               )}
             </div>
-            <div className="ml-2.5 whitespace-pre-line pl-1.5 text-md italic tracking-wide">
+            <div className="text-md ml-2.5 whitespace-pre-line pl-1.5 italic tracking-wide">
               {/* <span>{edu.school}</span> */}
-              <div className="-mt-1 flex items-center justify-between  font-light tracking-wide">
+              <div className="-mt-1 flex items-center justify-between font-light tracking-wide">
                 <span>{edu.school}</span>
                 {edu.cgpa && (
                   <span className="text-md tracking pr-3">
-                    GPA: <span className="font-bold text-sm not-italic">{edu.cgpa}</span>
+                    GPA:{" "}
+                    <span className="text-sm font-bold not-italic">
+                      {edu.cgpa}
+                    </span>
                   </span>
                 )}
               </div>
@@ -329,114 +328,186 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
   );
 }
 
-function SkillSet({resumeData}:ResumeSectionProps){
-  const{skillSet} =resumeData;
-  const skillNotEmpty = skillSet?.filter((skill)=>Object.values(skill).filter(Boolean).length>0,);
-  
-  if(!skillNotEmpty?.length) return null;
+function SkillSet({ resumeData }: ResumeSectionProps) {
+  const { skillSet } = resumeData;
+  const skillNotEmpty = skillSet?.filter(
+    (skill) => Object.values(skill).filter(Boolean).length > 0,
+  );
+
+  if (!skillNotEmpty?.length) return null;
 
   return (
     <>
-    <div className="-mb-3 break-inside-avoid space-y-1.5
-    font-['Computer_Modern']">
-        <div
-        className="-mb-2.5 flex text-md  tracking-wide"
-      >
-        T <span className="mt-1 items-center text-xs ">ECHNICAL SKILLS</span>
+      <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
+        <div className="text-md -mb-2.5 flex tracking-wide">
+          T <span className="mt-1 items-center text-xs">ECHNICAL SKILLS</span>
+        </div>
+        <div className="-mb-3 h-[1px] w-full bg-black" />
+        {skillNotEmpty.map((skill, index) => (
+          <div key={index} className="break-inside-avoid">
+            <div className="-mt-1.5 flex flex-col pl-3.5 pr-2">
+              <div className="flex items-center text-[16px] font-semibold">
+                Languages:
+                <span className="ml-2 text-sm font-normal tracking-wide">
+                  {skill.languages}
+                </span>
+              </div>
+              {skill.frameworks && (
+                <div className="-mt-1.5 flex items-center text-[16px] font-semibold">
+                  Frameworks:
+                  <span className="ml-2 text-sm font-normal tracking-wide">
+                    {skill.frameworks}
+                  </span>
+                </div>
+              )}
+              {skill.tools && (
+                <div className="-mt-1.5 flex items-center text-[16px] font-semibold">
+                  Developer Tools:
+                  <span className="ml-2 text-sm font-normal tracking-wide">
+                    {skill.tools}
+                  </span>
+                </div>
+              )}
+              {skill.libraries && (
+                <div className="-mt-1.5 flex items-center text-[16px] font-semibold">
+                  Libraries:
+                  <span className="ml-2 text-sm font-normal tracking-wide">
+                    {skill.libraries}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
-      <div className="w-full h-[1px] -mb-3 bg-black"/>
-      {skillNotEmpty.map((skill,index)=>(
-        <div key = {index} className="break-inside-avoid ">
-          <div className=" -mt-1.5 flex flex-col pl-3 pr-2  ">
-            <div className=" flex items-center  text-[16px] font-semibold">
-              Languages: 
-            <span className="font-normal ml-2 tracking-wide text-sm">{skill.languages}</span>
-            </div>
-            {skill.frameworks && (
-            <div className="-mt-1.5 flex items-center  text-[16px] font-semibold">
-              Frameworks: 
-            <span className="font-normal ml-2 tracking-wide text-sm">{skill.frameworks}</span>
-            </div>
-            )}
-            {skill.tools && (
-            <div className="-mt-1.5 flex items-center  text-[16px] font-semibold">
-              Developer Tools: 
-            <span className="font-normal ml-2 tracking-wide text-sm ">{skill.tools}</span>
-            </div>
-            )}
-            {skill.libraries && (
-            <div className="-mt-1.5 flex items-center  text-[16px] font-semibold">
-             Libraries: 
-            <span className="font-normal ml-2 tracking-wide text-sm ">{skill.libraries}</span>
-            </div>
-            )}
+    </>
+  );
+}
+
+function CustomSection({ resumeData }: ResumeSectionProps) {
+  const { custom } = resumeData;
+
+  const customNotEmpty = custom?.filter(
+    (val) => Object.values(val).filter(Boolean).length > 0,
+  );
+
+  if (!customNotEmpty?.length) return null;
+
+  return (
+    <>
+      {customNotEmpty.map((val, index) => (
+        <div
+          key={index}
+          className="-mt-3 break-inside-avoid space-y-2 font-['Computer_Modern']"
+        >
+          <div className="-mb-3 flex text-2xl font-bold tracking-wide">
+            {val.heading?.charAt(0)}
+            <span className="mt-1 items-center text-lg font-bold">
+              {val.heading?.slice(1)}
+            </span>
+          </div>
+          <hr className="border-1 bg-black" />
+          <div className="-mt-1 whitespace-pre-line pl-4 pr-2 text-sm">
+            {val.description}
           </div>
         </div>
       ))}
-
-    </div>
     </>
-  )
-
+  );
 }
 
-function CustomSection ({resumeData}: ResumeSectionProps){
- const {custom} = resumeData;
+function CodingProfileSection({ resumeData }: ResumeSectionProps) {
+  const { codingProfiles, colorHex } = resumeData;
 
- const customNotEmpty = custom?.filter((val)=> Object.values(val).filter(Boolean).length>0);
+  const codingProfilesNotEmpty = codingProfiles?.filter(
+    (profile) => Object.values(profile).filter(Boolean).length > 0,
+  );
 
- if(!customNotEmpty?.length) return null;
+  if (!codingProfilesNotEmpty?.length) return null;
 
- return (
-  <>
-    {customNotEmpty.map((val, index) => (
-      <div key={index} className="-mt-3 break-inside-avoid space-y-2 font-['Computer_Modern']">
-        <div className="-mb-3 flex text-2xl font-bold tracking-wide">
-          {val.heading?.charAt(0)}
-          <span className="mt-1 items-center text-lg font-bold">
-            {val.heading?.slice(1)}
-          </span>
-        </div>
-        <hr className="border-1 bg-black" />
-        <div className="text-sm whitespace-pre-line -mt-1 pl-4 pr-2">
-          {val.description}
-        </div>
+  return (
+    <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
+      <div
+        className="text-md -mb-2.5 flex tracking-wide"
+        style={{ color: colorHex }}
+      >
+        C <span className="mt-1 items-center text-xs">ODING PROFILES</span>
       </div>
-    ))}
-  </>
-);
-}
+      <div className="-mb-3 h-[1px] w-full bg-black" />
 
-function CodingProfileSection ({resumeData}:ResumeSectionProps){
-const {codingProfiles,colorHex} = resumeData;
-
-const codingProfilesNotEmpty = codingProfiles?.filter(
-  (profile)=> Object.values(profile).filter(Boolean).length>0,
-);
-
-if(!codingProfilesNotEmpty?.length) return null;
-
-return (
-  <div className="">
-    <div
-      className="-mb-3 flex text-2xl font-bold tracking-wide"
-      style={{ color: colorHex }}
-    >
-      P <span className="mt-1 items-center text-lg font-bold">ROJECTS</span>
-    </div>
-    <hr />
-    {codingProfilesNotEmpty.map((prof,index)=>(
-      <div key= {index} className="break-inside-avoid">
-        <div className="m-1 -mt-1.5 flex items-center justify-between pl-1.5 text-sm font-semibold">
-          <p className="text-black-500 flex items-center justify-center gap-2 text-lg">
-            {prof.codingProfile}: 
+      {codingProfilesNotEmpty.map((prof, index) => (
+        <div key={index} className="break-inside-avoid">
+          <div className="justify m-1 -mt-1.5 flex items-center pl-2.5 text-sm font-semibold">
+            <span className="text-black-500 flex items-center justify-center px-1 text-[16px]">
+              {prof.codingProfile}
+            </span>
+            {prof.codingProfile && prof.codingProfileLink ? "  | " : ""}
+            {prof.codingProfileLink && (
+              <a
+                href={prof.codingProfileLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[16px] no-underline"
+              >
+                <span className="items-center px-1 text-sm font-extralight italic tracking-wide underline-offset-auto">
+                  Profile_Link
+                </span>
+              </a>
+            )}
+          </div>
+          <p className="m-0.5 -mt-1.5 overflow-hidden whitespace-pre-line break-words pl-6 pr-5 text-sm">
+            {prof.description}
           </p>
         </div>
+      ))}
+    </div>
+  );
+}
 
+function CoursesSection({ resumeData }: ResumeSectionProps) {
+  const { courses, colorHex } = resumeData;
+
+  const coursesNotEmpty = courses?.filter(
+    (course) => Object.values(course).filter(Boolean).length > 0,
+  );
+
+  if (!coursesNotEmpty?.length) return null;
+
+  return (
+    <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
+      <div
+        className="text-md -mb-2.5 flex tracking-wide"
+        style={{ color: colorHex }}
+      >
+        C <span className="mt-1 items-center text-xs">ERTIFICATIONS</span>
       </div>
-    ))}
-  </div>
-)
-} 
+      <div className="-mb-3 h-[1px] w-full bg-black" />
 
-
+      {coursesNotEmpty.map((course, index) => (
+        <div key={index} className="break-inside-avoid">
+          <div className="justify m-1 -mt-1.5 flex items-center pl-2.5 text-sm font-semibold">
+            <span className="text-black-500 flex items-center justify-center px-1 text-[16px]">
+              {course.course}
+            </span>
+            {course.course && course.courseLink ? "  | " : ""}
+            {course.courseLink && (
+              <a
+                href={course.courseLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[16px] no-underline"
+              >
+                <span className="items-center px-1 text-sm font-extralight italic tracking-wide underline-offset-auto">
+                  Link
+                </span>
+              </a>
+            )}
+          </div>
+          <p className="m-0.5 -mt-1.5 overflow-hidden whitespace-pre-line break-words pl-6 pr-5 text-sm">
+            {course.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
