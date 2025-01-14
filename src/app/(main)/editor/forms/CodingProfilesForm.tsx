@@ -1,4 +1,3 @@
-// src/app/(main)/editor/forms/CodingProfilesForm.tsx
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -6,34 +5,44 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/types";
-import { codingProfileSchema,codingProfileValues } from "@/lib/validation";
+import { cn } from "@/lib/utils";
+import { codingProfileSchema, codingProfileValues } from "@/lib/validation";
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { GripHorizontal } from "lucide-react";
+import { useEffect } from "react";
 import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function CodingProfilesForm({
   resumeData,
   setResumeData,
 }: EditorFormProps) {
-  const [showButton, setShowButton] = useState(
-    resumeData.codingProfiles && resumeData.codingProfiles.length === 0 ? 0 : 1,
-  );
-
   const form = useForm<codingProfileValues>({
     resolver: zodResolver(codingProfileSchema),
     defaultValues: {
-      codingProfiles: resumeData.codingProfiles || [],
+      codingProfiles: resumeData?.codingProfiles || [],
     },
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "codingProfiles",
   });
 
   useEffect(() => {
@@ -42,106 +51,141 @@ export default function CodingProfilesForm({
       if (!isValid) return;
       setResumeData({
         ...resumeData,
-        codingProfiles: values.codingProfiles?.filter((val) => val !== undefined) || [],
+        codingProfiles: values.codingProfiles?.filter((proj) => proj !== undefined) || [],
       });
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
 
-  useEffect(() => {
-    setShowButton(fields.length === 0 ? 0 : 1);
-  }, [fields]);
+  const { fields, append, remove, move } = useFieldArray({
+    control: form.control,
+    name: "codingProfiles",
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = fields.findIndex((field) => field.id === active.id);
+      const newIndex = fields.findIndex((field) => field.id === over.id);
+      move(oldIndex, newIndex);
+      return arrayMove(fields, oldIndex, newIndex);
+    }
+  }
 
   return (
-    <div className="mx-auto max-w-xl space-y-6">
-      <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Coding Profiles</h2>
-        <p className="text-sm text-muted-foreground">
-          Add your coding platform profiles and achievements
-        </p>
-      </div>
-
+    <div className="mx-auto max-w-xl space-y-6 mt-10">
+      
       <Form {...form}>
-        {fields.map((field, index) => (
-          <CodingProfileItem
-            id={field.id}
-            key={field.id}
-            index={index}
-            form={form}
-            remove={remove}
-          />
-        ))}
-        {showButton === 0 && (
+        <form className="space-y-3">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragCancel={handleDragEnd}
+            modifiers={[restrictToVerticalAxis]}
+          >
+            <SortableContext
+              items={fields}
+              strategy={verticalListSortingStrategy}
+            >
+              {fields.map((field, index) => (
+                <ProjectItem
+                  id={field.id}
+                  key={field.id}  
+                  index={index}
+                  form={form}
+                  remove={remove}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
           <div className="flex justify-center">
             <Button
               type="button"
-              onClick={() => {
+              onClick={() =>
                 append({
                   codingProfile: "",
                   codingProfileLink: "",
                   description: "",
-                });
-              }}
+                })
+              }
             >
-              Add Coding Profile
+              Add Profiles
+              
             </Button>
           </div>
-        )}
+        </form>
       </Form>
     </div>
   );
 }
 
-interface CodingProfileItemProps {
+interface ProjectItemProps {
   id: string;
   form: UseFormReturn<codingProfileValues>;
   index: number;
   remove: (index: number) => void;
 }
 
-function CodingProfileItem({ id, form, index, remove }: CodingProfileItemProps) {
+function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
   return (
-    <div className="space-y-3 rounded-md border bg-background p-3">
+    <div
+      className={cn(
+        "space-y-3 rounded-md border bg-background p-3",
+        isDragging && "relative z-50 cursor-grab shadow-lg",
+      )}
+      ref={setNodeRef}
+     style={{
+             transform: CSS.Transform.toString(transform),
+             transition,
+           }}
+    >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold text-xl">Coding Profile Details</span>
-        <Button 
-          type="button" 
-          variant="destructive" 
-          size="sm" 
-          onClick={() => remove(index)}
-        >
-          Remove
-        </Button>
+        <span className="font-semibold">Coding Profile: {index + 1}</span>
+        <GripHorizontal
+          className="size-5 cursor-grab text-muted-foreground focus:outline-none"
+          {...attributes}
+          {...listeners}
+        />
       </div>
+     
       <FormField
         control={form.control}
         name={`codingProfiles.${index}.codingProfile`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Platform Name</FormLabel>
+            <FormLabel>Coding Profile</FormLabel>
             <FormControl>
-              <Input
-                placeholder="e.g., LeetCode, CodeChef"
-                {...field}
-              />
+              <Input {...field} autoFocus />
             </FormControl>
-            <FormMessage />
           </FormItem>
         )}
       />
+       
       <FormField
         control={form.control}
         name={`codingProfiles.${index}.codingProfileLink`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Profile Link</FormLabel>
+            <FormLabel>codingProfileLink </FormLabel>
             <FormControl>
-              <Input
-                placeholder="e.g., https://leetcode.com/username"
-                {...field}
-              />
+              <Input {...field} autoFocus />
             </FormControl>
-            <FormMessage />
           </FormItem>
         )}
       />
@@ -152,15 +196,18 @@ function CodingProfileItem({ id, form, index, remove }: CodingProfileItemProps) 
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea
-                placeholder="Highlight your achievements or notable solutions"
-                {...field}
-              />
+              <Textarea {...field} autoFocus />
             </FormControl>
-            <FormMessage />
           </FormItem>
         )}
       />
+     
+      <Button variant="destructive" type="button" onClick={() => remove(index)}>
+        Remove
+      </Button>
     </div>
   );
 }
+
+
+

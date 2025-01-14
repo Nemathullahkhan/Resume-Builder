@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - AI Resume Builder",
+    template: "AI Resume Builder",
     absolute: "Ai Resume Builder",
   },
   description: "Your own personalised Resume builder powered with AI (gpt-4)",
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={`${inter.className} mx-2`}>
           <ThemeProvider 
           attribute="class"
           defaultTheme="system"

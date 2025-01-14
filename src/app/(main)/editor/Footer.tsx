@@ -28,10 +28,11 @@ export default function Footer({
   )?.key;
 
   return (
-    <footer className="w-full border-t px-3 py-5">
+    <footer className="w-full border-t py-3">
       <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3">
         <div className="flex items-center gap-3">
           <Button
+            className="w-24  h-8 text-xs"
             variant="secondary"
             onClick={
               previousStep ? () => setCurrentStep(previousStep) : undefined
@@ -41,6 +42,7 @@ export default function Footer({
             Previous step
           </Button>
           <Button
+          className="w-18 h-8 text-xs font-semibold"
             onClick={nextStep ? () => setCurrentStep(nextStep) : undefined}
             disabled={!nextStep}
           >
@@ -59,10 +61,10 @@ export default function Footer({
           {showSmResumePreview ? <PenLineIcon/> : <FileUserIcon/>}
         </Button>
         <div className="flex items-center gap-3">
-          <Button variant="secondary" asChild>
+          <Button variant="secondary" className="w-16 h-8 text-xs font-semibold" asChild>
             <Link href="/resumes">Close</Link>
           </Button>
-          <p className={cn("text-muted-foreground opacity-0",isSaving && "opacity-100")}
+          <p className={cn("text-muted-foreground opacity-0 text-xs",isSaving && "opacity-100")}
           >
             Saving...
           </p>

@@ -138,18 +138,7 @@ export type courseValues = z.infer<typeof courseSchema>;
 
 export type courseSet = NonNullable<z.infer<typeof courseSchema>["courses"]>[number]
 
-export const contestSchema = z.object({
-  contests:z.array(
-    z.object({
-      contest : optionalString,
-      contestStanding : optionalString,
-      description: optionalString,
-    })
-  )
-  .optional()
-})
-export type contestValues = z.infer<typeof contestSchema>;
-export type contestSet = NonNullable<z.infer<typeof contestSchema>["contests"]>[number]
+
 
 export const codingProfileSchema = z.object({
   codingProfiles:z.array(
@@ -157,14 +146,14 @@ export const codingProfileSchema = z.object({
       codingProfile : optionalString,
       codingProfileLink : optionalString,
       description: optionalString,
-    })
+    }),
   )
   .optional()
 })
 
 export type codingProfileValues = z.infer<typeof codingProfileSchema>;
 
-export type codingProfileSet = NonNullable<z.infer<typeof codingProfileSchema>["codingProfiles"]>[number]
+export type codingProfiles = NonNullable<z.infer<typeof codingProfileSchema>["codingProfiles"]>[number]
 
 
 
@@ -186,7 +175,6 @@ export const resumeSchema = z.object({
   ...educationSchema.shape,
   // ...skillsSchema.shape,
   ...courseSchema.shape,
-  ...contestSchema.shape,
   ...codingProfileSchema.shape,
   ...skillSchema.shape,
   ...customSchema.shape,

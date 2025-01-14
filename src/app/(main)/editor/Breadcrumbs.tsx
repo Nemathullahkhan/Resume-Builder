@@ -10,7 +10,7 @@ interface BreadcrumbsProps{
 
 
 export default function  Breadcrumbs({currentStep,setCurrentStep}:BreadcrumbsProps){
-    return <div className="flex justify-center">
+    return <div className="flex justify-center ">
         <Breadcrumb>
         <BreadcrumbList>
         {steps.map(step =>(
@@ -20,7 +20,7 @@ export default function  Breadcrumbs({currentStep,setCurrentStep}:BreadcrumbsPro
                             <BreadcrumbPage>{step.title}</BreadcrumbPage>
                         ):(
                             <BreadcrumbLink asChild>
-                                <button onClick={()=>setCurrentStep(step.key)}>{step.title}</button>
+                                <button  className ="text-xs" onClick={()=>setCurrentStep(step.key)}>{step.title}</button>
                             </BreadcrumbLink>
                         )}
                     </BreadcrumbItem>

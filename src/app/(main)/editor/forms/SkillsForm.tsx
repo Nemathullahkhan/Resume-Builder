@@ -466,9 +466,10 @@ interface SkillItemProps {
 function SkillItem({ id, form, index, remove }: SkillItemProps) {
   return (
     <div className={cn("space-y-3 rounded-md border bg-background p-3")}>
-      <div className="flex justify-between gap-2">
-        <span className="font-semibold">Technical Skills</span>
+      <div className="flex justify-between items-center gap-2">
+        <span className="text-[15px] font-semibold tracking-tight">Technical Skills</span>
         <Button
+        className="w-16 text-xs"
         variant="destructive"
         type="button"
         onClick={() => {
@@ -478,6 +479,7 @@ function SkillItem({ id, form, index, remove }: SkillItemProps) {
         Remove
       </Button>
       </div>
+      <hr />
       
       <FormField
         control={form.control}
