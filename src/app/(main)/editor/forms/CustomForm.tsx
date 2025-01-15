@@ -20,14 +20,14 @@ import CustomizedForm from "./CustomizedForm";
     return (
       <div className="mx-auto max-w-xl space-y-6">
         <div className="space-y-1.5 text-center">
-          <h2 className="text-2xl font-semibold">Custom Section</h2>
-          <p className="text-sm text-muted-foreground">
+          <h2 className="text-xl font-semibold">Custom Section</h2>
+          <p className="text-xs text-muted-foreground">
             Add or manage sections you want to include
           </p>
         </div>
   
         {/* Buttons to toggle between sections */}
-        <div className="flex justify-between">
+        <div className="flex justify-center gap-8">
           <Button
             variant={visibleSection === "codingProfiles" ? "default" : "outline"}
             onClick={() => handleSectionToggle("codingProfiles")}

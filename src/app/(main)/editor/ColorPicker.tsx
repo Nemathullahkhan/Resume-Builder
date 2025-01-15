@@ -19,6 +19,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
         <Button
           variant="outline"
           size="icon"
+          className="w-[28px] h-[28px]"
           title="Change resume color"
           onClick={() => setShowPopover(true)}
         >

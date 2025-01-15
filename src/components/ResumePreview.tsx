@@ -26,7 +26,7 @@ export default function ResumePreview({
   return (
     <div
       className={cn(
-        "aspect-[210/297] h-fit w-full bg-neutral-100 text-black",
+        "aspect-[210/297] h-fit w-full bg-white text-black",
         className,
       )}
       ref={containerRef}
@@ -439,7 +439,7 @@ function CodingProfileSection({ resumeData }: ResumeSectionProps) {
 
       {codingProfilesNotEmpty.map((prof, index) => (
         <div key={index} className="break-inside-avoid">
-          <div className="justify m-1 -mt-1.5 flex items-center pl-2.5 text-sm font-semibold">
+          <div className="justify m-1 -mt-1.5 flex items-center pl-1.5 text-sm font-semibold">
             <span className="text-black-500 flex items-center justify-center px-1 text-[16px]">
               {prof.codingProfile}
             </span>
@@ -452,7 +452,7 @@ function CodingProfileSection({ resumeData }: ResumeSectionProps) {
                 className="text-[16px] no-underline"
               >
                 <span className="items-center px-1 text-sm font-extralight italic tracking-wide underline-offset-auto">
-                  Profile_Link
+                  Profile
                 </span>
               </a>
             )}
@@ -487,7 +487,7 @@ function CoursesSection({ resumeData }: ResumeSectionProps) {
 
       {coursesNotEmpty.map((course, index) => (
         <div key={index} className="break-inside-avoid">
-          <div className="justify m-1 -mt-1.5 flex items-center pl-2.5 text-sm font-semibold">
+          <div className="justify m-1 -mt-1.5 flex items-center pl-1.5 text-sm font-semibold">
             <span className="text-black-500 flex items-center justify-center px-1 text-[16px]">
               {course.course}
             </span>
