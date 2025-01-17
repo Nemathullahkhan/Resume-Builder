@@ -9,6 +9,7 @@ import { CreditCard, Gavel } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { dark } from "@clerk/themes";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
 const HomeNavbar = () => {
   const { theme } = useTheme();
@@ -22,6 +23,14 @@ const HomeNavbar = () => {
             ResumeSMITH
           </span>
         </Link>
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className=""
+        >
+          <Link href="/resumes">Login</Link>
+        </Button>
         <div className="flex items-center gap-3">
           <UserButton
             appearance={{
