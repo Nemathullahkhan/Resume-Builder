@@ -3,10 +3,11 @@ import { cn } from "@/lib/utils";
 import { resumeSchema, ResumeValues, skillSchema } from "@/lib/validation";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { formatDate } from "date-fns";
+import { formatDate } from "@/lib/dateUtils";
 import { Badge } from "./ui/badge";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Github, Heading, Linkedin } from "lucide-react";
+
 
 interface ResumePreviewProps {
   resumeData: ResumeValues;
@@ -298,11 +299,11 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
             <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold">
               <span className="text-[16px]">{edu.degree}</span>
               {edu.startDate && (
-                <span className="text-md font-normal">
+                <span className="text-sm font-bold">
                   {edu.endDate && !edu.startDate
                     ? formatDate(edu.endDate, "MM,yyyy")
                     : edu.startDate && edu.endDate
-                      ? `${formatDate(edu.startDate, "MM,yyyy")} - ${formatDate(edu.endDate, "MM,yyyy")}`
+                      ? `${formatDate(edu.startDate, "MM,yyyy")} -   ${formatDate(edu.endDate, "MM,yyyy")}`
                       : edu.startDate
                         ? `${formatDate(edu.startDate, "MM,yyyy")} - Present`
                         : ""}
@@ -329,6 +330,62 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
     </>
   );
 }
+
+
+
+// function EducationSection({ resumeData }: ResumeSectionProps) {
+//   const { educations, colorHex } = resumeData;
+
+//   const educationNotEmpty = educations?.filter(
+//     (edu) => Object.values(edu).filter(Boolean).length > 0,
+//   );
+
+//   if (!educationNotEmpty?.length) return null;
+
+//   return (
+//     <>
+//       <div className="-mb-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']">
+//         <div className="text-md -mb-2.5 flex tracking-wider" style={{ color: colorHex }}>
+//           E <span className="mt-1 items-center text-xs">DUCATION</span>
+//         </div>
+//         <div className="-mb-3 h-[1px] w-full bg-black" style={{ background: colorHex }} />
+//         {educationNotEmpty.map((edu, index) => (
+//           <div key={index} className="break-inside-avoid">
+//             <div className="-mt-1.5 flex items-center justify-between pl-3 pr-2 font-semibold">
+//               <span className="text-[16px]">{edu.degree}</span>
+//               {edu.startDate && (
+//                 <span className="text-md font-normal">
+//                   {edu.endDate && !edu.startDate
+//                     ? formatDate(edu.endDate)
+//                     : edu.startDate && edu.endDate
+//                     ? `${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}`
+//                     : edu.startDate
+//                     ? `${formatDate(edu.startDate)} - Present`
+//                     : ""}
+//                 </span>
+//               )}
+//             </div>
+//             <div className="text-md ml-2.5 whitespace-pre-line pl-1.5 italic tracking-wide">
+//               <div className="-mt-1 flex items-center justify-between font-light tracking-wide">
+//                 <span>{edu.school}</span>
+//                 {edu.cgpa && (
+//                   <span className="text-md tracking pr-3">
+//                     GPA:{" "}
+//                     <span className="text-sm font-bold not-italic">
+//                       {edu.cgpa}
+//                     </span>
+//                   </span>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// }
+
+
 
 function SkillSet({ resumeData }: ResumeSectionProps) {
   const { skillSet,colorHex } = resumeData;
