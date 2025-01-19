@@ -40,7 +40,7 @@ export default function CoursesForm({
   const form = useForm<courseValues>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
-        courses: resumeData.courses || [],
+      courses: resumeData.courses || [],
     },
   });
 
@@ -66,7 +66,7 @@ export default function CoursesForm({
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   function handleDragEnd(event: DragEndEvent) {
@@ -83,7 +83,7 @@ export default function CoursesForm({
   }
 
   return (
-    <div className="mx-auto max-w-xl space-y-6 mt-10">
+    <div className="mx-auto mt-10 max-w-xl space-y-6">
       <Form {...form}>
         <form className="space-y-3">
           <DndContext
@@ -148,7 +148,7 @@ function CourseItem({ id, form, index, remove }: ProjectItemProps) {
     <div
       className={cn(
         "space-y-3 rounded-md border bg-background p-3",
-        isDragging && "relative z-50 cursor-grab shadow-lg"
+        isDragging && "relative z-50 cursor-grab shadow-lg",
       )}
       ref={setNodeRef}
       style={{
@@ -157,7 +157,7 @@ function CourseItem({ id, form, index, remove }: ProjectItemProps) {
       }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">Cerifications:  {index + 1}</span>
+        <span className="font-semibold">Cerifications: {index + 1}</span>
         <GripHorizontal
           className="size-5 cursor-grab text-muted-foreground focus:outline-none"
           {...attributes}
@@ -198,20 +198,19 @@ function CourseItem({ id, form, index, remove }: ProjectItemProps) {
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea {...field} autoFocus />
+              <Textarea
+                {...field}
+                className="h-36 w-full resize-none overflow-auto p-2"
+                autoFocus
+              />
             </FormControl>
           </FormItem>
         )}
       />
 
-      <Button
-        variant="destructive"
-        type="button"
-        onClick={() => remove(index)}
-      >
+      <Button variant="destructive" type="button" onClick={() => remove(index)}>
         Remove
       </Button>
     </div>
   );
 }
-

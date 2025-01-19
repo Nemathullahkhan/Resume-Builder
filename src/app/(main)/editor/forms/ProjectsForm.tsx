@@ -217,7 +217,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea {...field} autoFocus />
+                    <Textarea {...field} className="h-36 w-full resize-none overflow-auto p-2 border  rounded-md" autoFocus />
             </FormControl>
           </FormItem>
         )}

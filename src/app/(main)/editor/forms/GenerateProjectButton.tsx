@@ -247,7 +247,8 @@ function InputDialog({
                   <FormControl>
                     <Textarea
                       {...field}
-                      placeholder={`"My project is a <type of application, e.g., todo app, e-commerce platform> built using the <list technologies used, e.g., MERN stack, React, Node.js, MongoDB> and deployed on <deployment platform, e.g., Vercel, AWS>. It performs <list key functionalities, e.g., CRUD operations, real-time messaging, payment processing> and includes features like <list unique features or functionalities, e.g., user authentication, dynamic content display, push notifications>. The app provides <describe the user experience or value it offers, e.g., a smooth interface, fast data updates, seamless user interaction>."`}
+                      className="h-36 w-full resize-none overflow-auto p-2 placeholder:text-sm"
+                      placeholder={`"My project is a <type of application, e.g., todo app, e-commerce platform> built with <technologies used, e.g., MERN stack, React, Node.js, MongoDB>, deployed on <platform, e.g., Vercel, AWS>. It offers <key features, e.g., user authentication, real-time updates, payment processing> and delivers <user value, e.g., a seamless, interactive experience>."`}
                       autoFocus
                     />
                   </FormControl>

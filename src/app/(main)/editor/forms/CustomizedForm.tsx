@@ -171,7 +171,7 @@ function CustomizedItem({ id, form, index, remove }: ProjectItemProps) {
         name={`custom.${index}.heading`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Coding Profile</FormLabel>
+            <FormLabel>Heading</FormLabel>
             <FormControl>
               <Input {...field} autoFocus />
             </FormControl>
@@ -187,7 +187,7 @@ function CustomizedItem({ id, form, index, remove }: ProjectItemProps) {
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea {...field} autoFocus />
+              <Textarea {...field} className="h-36 w-full resize-none overflow-auto p-2 " autoFocus />
             </FormControl>
           </FormItem>
         )}

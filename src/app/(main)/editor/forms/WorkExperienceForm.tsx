@@ -272,7 +272,7 @@ function WorkExperienceItem({
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea {...field} />
+              <Textarea {...field} className="h-36 w-full resize-none overflow-auto p-2  rounded-md"/>
             </FormControl>
             <FormMessage />
           </FormItem>

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -51,7 +50,8 @@ export default function CodingProfilesForm({
       if (!isValid) return;
       setResumeData({
         ...resumeData,
-        codingProfiles: values.codingProfiles?.filter((proj) => proj !== undefined) || [],
+        codingProfiles:
+          values.codingProfiles?.filter((proj) => proj !== undefined) || [],
       });
     });
     return unsubscribe;
@@ -67,7 +67,7 @@ export default function CodingProfilesForm({
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   function handleDragEnd(event: DragEndEvent) {
@@ -84,7 +84,7 @@ export default function CodingProfilesForm({
   }
 
   return (
-    <div className="mx-auto max-w-xl space-y-6 mt-10">
+    <div className="mx-auto mt-10 max-w-xl space-y-6">
       <Form {...form}>
         <form className="space-y-3">
           <DndContext
@@ -149,7 +149,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
     <div
       className={cn(
         "space-y-3 rounded-md border bg-background p-3",
-        isDragging && "relative z-50 cursor-grab shadow-lg"
+        isDragging && "relative z-50 cursor-grab shadow-lg",
       )}
       ref={setNodeRef}
       style={{
@@ -199,20 +199,19 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea {...field} autoFocus />
+              <Textarea
+                {...field}
+                className="h-36 w-full resize-none overflow-auto p-2"
+                autoFocus
+              />
             </FormControl>
           </FormItem>
         )}
       />
 
-      <Button
-        variant="destructive"
-        type="button"
-        onClick={() => remove(index)}
-      >
+      <Button variant="destructive" type="button" onClick={() => remove(index)}>
         Remove
       </Button>
     </div>
   );
 }
-

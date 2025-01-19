@@ -428,7 +428,7 @@ export default function Home() {
           asChild
           size="lg"
           variant="outline"
-          className="text-white border-2 font-bold tracking-tighter shadow-sm shadow-zinc-300 z-10 "
+          className="text-black  border-black border-2 border-dotted  bg-white z-10 "
         >
           <Link href="/resumes">Get started</Link>
         </Button>

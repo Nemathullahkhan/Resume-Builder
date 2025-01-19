@@ -44,6 +44,7 @@ export default function SummaryForm ({resumeData,setResumeData}:EditorFormProps)
                         <FormControl>
                             <Textarea 
                             {...field}
+                            className="h-36 w-full resize-none overflow-auto p-2 "
                             placeholder="A brief,engaging text about yourself!"/>
                         </FormControl>
                         <FormMessage/>

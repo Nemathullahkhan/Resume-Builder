@@ -402,7 +402,7 @@ function CustomSection({ resumeData }: ResumeSectionProps) {
           key={index}
           className="-mt-3 break-inside-avoid space-y-1.5 font-['Computer_Modern']"
         >
-          <div className="-mb-3 flex text-[16px]  tracking-wider"style={{ color: colorHex }}>
+          <div className="-mb-3 flex text-[16px]  tracking-wider uppercase"style={{ color: colorHex }}>
             {val.heading?.charAt(0)}
             <span className="mt-1 items-center text-xs ">
               {val.heading?.slice(1)}
