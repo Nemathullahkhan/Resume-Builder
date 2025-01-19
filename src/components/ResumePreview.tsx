@@ -124,9 +124,9 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           {email && (
             <a
               href={`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`}
-              className="flex gap-0.5 hover:text-black"
+              className="flex gap-0.5 -mx-1 hover:text-black"
             >
-              <span className="items-center font-bold">Email:</span>
+              <span className="items-center font-bold ">Email:</span>
               {email}
             </a>
           )}
@@ -137,7 +137,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
               href={githubProfile}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex gap-1 hover:text-black"
+              className="flex gap-0.5 -mx-1 hover:text-black"
             >
               <span className="items-center font-bold">Github:</span>
               <Github size={14} />
@@ -149,7 +149,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
               href={linkedinProfile}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex gap-1 hover:text-blue-400"
+              className="flex gap-0.5 -mx-1 hover:text-blue-400"
             >
               <span className="items-center font-bold">LinkedIn: </span>
               <Linkedin size={14} />

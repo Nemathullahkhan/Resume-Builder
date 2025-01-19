@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import ResumePreview from "@/components/ResumePreview";
@@ -14,18 +16,18 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { formatDate } from "date-fns";
 import { MoreVertical, Printer, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { deleteResume } from "./action";
 import {
   Dialog,
-  DialogFooter,
+  DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { DialogContent, DialogDescription } from "@radix-ui/react-dialog";
+import { useReactToPrint } from "react-to-print";
+import { useRouter } from "next/navigation";
 import LoadingButton from "@/components/LoadingButton";
-
-import {useReactToPrint} from "react-to-print"
 
 interface ResumeItemProps {
   resume: ResumeServerData;
@@ -33,6 +35,7 @@ interface ResumeItemProps {
 
 export default function ResumeItem({ resume }: ResumeItemProps) {
   const contentRef = useRef<HTMLDivElement>(null)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const reactToPrintFn = useReactToPrint({
     contentRef,
@@ -60,7 +63,7 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
           </p>
         </Link>
         <Link
-          href={`/editor?resumeId = ${resume.id}`}
+          href={`/editor?resumeId=${resume.id}`}
           className="relative inline-block w-full"
         >
           <ResumePreview
@@ -71,116 +74,120 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
         </Link>
       </div>
-      <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
+      <MoreMenu 
+        resumeId={resume.id} 
+        onPrintClick={reactToPrintFn} 
+        onDeleteClick={() => setShowDeleteDialog(true)}
+      />
+      <DeleteResumeDialog
+        resumeId={resume.id}
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+      />
     </div>
   );
 }
 
 interface MoreMenuProps {
   resumeId: string;
-  onPrintClick:()=> void;
+  onPrintClick: () => void;
+  onDeleteClick: () => void;
 }
 
-function MoreMenu({ resumeId,onPrintClick }: MoreMenuProps) {
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-
+function MoreMenu({ resumeId, onPrintClick, onDeleteClick }: MoreMenuProps) {
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-0.5 top-0.5 opacity-0 transition-opacity group-hover:opacity-100"
-          >
-            <MoreVertical className="size-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem
-            className="flex items-center gap-2"
-            onClick={() => setShowDeleteConfirmation(true)}
-          >
-            <Trash2 className="size-4" />
-            Delete
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center gap-2"
-            onClick ={onPrintClick}>
-              <Printer className="size-4"/>
-              Print
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <DeleteConfirmationDialog
-        resumeId={resumeId}
-        open={showDeleteConfirmation}
-        onOpenChange={setShowDeleteConfirmation}
-      />
-    </>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-0.5 top-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+        >
+          <MoreVertical className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem
+          className="flex items-center gap-2"
+          onSelect={(e) => {
+            e.preventDefault();
+            onDeleteClick();
+          }}
+        >
+          <Trash2 className="size-4" />
+          Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="flex items-center gap-2"
+          onClick={onPrintClick}
+        >
+          <Printer className="size-4"/>
+          Print
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
-interface DeleteConfirmationDialogProps {
+interface DeleteResumeDialogProps {
   resumeId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteConfirmationDialog({
+function DeleteResumeDialog({
   resumeId,
   open,
   onOpenChange,
-}: DeleteConfirmationDialogProps) {
+}: DeleteResumeDialogProps) {
   const { toast } = useToast();
-
-  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   async function handleDelete() {
-    startTransition(async () => {
-      try {
-        await deleteResume(resumeId);
-        onOpenChange(false);
-      } catch (error) {
-        console.error(error);
-        toast({
-          variant: "destructive",
-          description: "Something went wrong. Please try again.",
-        });
-      }
-    });
+    setIsDeleting(true);
+    try {
+      await deleteResume(resumeId);
+      onOpenChange(false);
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        description: "Something went wrong. Please try again.",
+      });
+    } finally {
+      setIsDeleting(false);
+    }
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete resume?</DialogTitle>
+          <DialogTitle>Delete Resume</DialogTitle>
           <DialogDescription>
-            This will permanently delete this resume. This action cannot be
-            undone.
+            Are you sure you want to delete this resume? 
+            This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <LoadingButton
-            variant="destructive"
+        <div className="flex justify-end space-x-2">
+          <Button 
+            variant="secondary" 
+            onClick={() => onOpenChange(false)}
+          >
+            Cancel
+          </Button>
+          <LoadingButton 
+            variant="destructive" 
             onClick={handleDelete}
-            loading={isPending}
+            loading={isDeleting}
           >
             Delete
           </LoadingButton>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );
 }
-
-
-
-
-
-
-

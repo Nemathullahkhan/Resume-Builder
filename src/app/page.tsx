@@ -130,7 +130,7 @@ export default function Home() {
      )}
       <HomeNavbar />
       <main className="bg-black-100 relative flex min-h-screen flex-col items-center justify-center gap-8 overflow-hidden px-4 py-32 text-center text-zinc-100 sm:gap-12 md:px-8 lg:py-48">
-        <div className="absolute left-0 top-0 grid w-full grid-cols-[repeat(auto-fill,_64px)] grid-rows-[repeat(auto-fill,_64px)] pl-5">
+        <div className="absolute left-0 top-0 grid w-full grid-cols-[repeat(auto-fill,_64px)] grid-rows-[repeat(auto-fill,_64px)] pl-18">
           {Array.from({ length: 271 }).map((_, i) => (
             <div
               key={i}
