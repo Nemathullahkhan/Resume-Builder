@@ -305,16 +305,41 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { Blocks, BlocksIcon, Compass, Layout, Pencil, Save, Shield, UserRoundPen, Wand, Zap, Gavel } from "lucide-react";
+import {
+  FileText,
+  Move,
+  Brain,
+  NotepadTextDashed,
+  Lock,
+  List,
+  Palette,
+  Printer,
+  Cloud,
+} from "lucide-react";
+import {
+  Blocks,
+  BlocksIcon,
+  Compass,
+  Layout,
+  Pencil,
+  Save,
+  Shield,
+  UserRoundPen,
+  Wand,
+  Zap,
+  Gavel,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { motion, useInView } from "framer-motion";
 import image from "@/assets/jakes-resume-1.png";
+import editor from "@/assets/editor.png";
 
 // Navbar Component
 const HomeNavbar = ({ scrollToSection }) => {
   return (
-    <header className="fixed top-0 left-0 w-full bg-transparent shadow-sm z-50">
+    <header className="fixed left-0 top-0 z-50 w-full bg-transparent shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 p-4 backdrop-blur-md">
         <Link href="/" className="flex items-center gap-2">
           <Gavel />
@@ -325,38 +350,34 @@ const HomeNavbar = ({ scrollToSection }) => {
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
-            onClick={() => scrollToSection('features')}
+            onClick={() => scrollToSection("features")}
             className="text-sm text-zinc-300 hover:text-zinc-100"
           >
             Features
           </Button>
           <Button
             variant="ghost"
-            onClick={() => scrollToSection('process')}
+            onClick={() => scrollToSection("process")}
             className="text-sm text-zinc-300 hover:text-zinc-100"
           >
             Process
           </Button>
           <Button
             variant="ghost"
-            onClick={() => scrollToSection('contact')}
+            onClick={() => scrollToSection("howitworks")}
             className="text-sm text-zinc-300 hover:text-zinc-100"
           >
-            Get Started 
+            How It Works
           </Button>
           <Button
             variant="ghost"
-            onClick={() => scrollToSection('contact')}
+            onClick={() => scrollToSection("contact")}
             className="text-sm text-zinc-300 hover:text-zinc-100"
           >
             Contact
           </Button>
         </div>
-        <Button
-          asChild
-          variant="ghost"
-          className="text-md font-extrabold "
-        >
+        <Button asChild variant="ghost" className="text-md font-extrabold">
           <Link href="/resumes">LOGIN</Link>
         </Button>
       </div>
@@ -367,11 +388,14 @@ const HomeNavbar = ({ scrollToSection }) => {
 // Main Component
 export default function Home() {
   const { isSignedIn } = useUser();
+  const procesRef = useRef(null);
+  const ref = useRef(null);
   const featuresRef = useRef(null);
   const processRef = useRef(null);
   const contactRef = useRef(null);
   const howItWorkRef = useRef(null);
-
+  const isInView = useInView(ref, { once: true });
+  const isProcessView = useInView(procesRef, { once: true });
   if (isSignedIn) {
     redirect("/resumes");
   }
@@ -381,11 +405,12 @@ export default function Home() {
       features: featuresRef,
       process: processRef,
       contact: contactRef,
+      howitworks: howItWorkRef,
     };
-    
+
     refs[section]?.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
+      behavior: "smooth",
+      block: "start",
     });
   };
 
@@ -399,14 +424,16 @@ export default function Home() {
             <div
               key={i}
               className={`h-[64px] w-[64px] bg-transparent ${
-                i >= 105 ? "border border-zinc-900/20" : "border border-zinc-900/40"
+                i >= 105
+                  ? "border border-zinc-900/20"
+                  : "border border-zinc-900/40"
               }`}
             ></div>
           ))}
         </div>
 
         {/* Hero Section */}
-        <div className="z-10 max-w-prose space-y-4">
+        {/* <div className="z-10 max-w-prose space-y-4">
           <h1 className="scroll-m-20 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             Create the{" "}
             <span className="inline-block bg-gradient-to-r from-red-200 to-blue-300 bg-clip-text text-transparent">
@@ -421,6 +448,29 @@ export default function Home() {
           <p className="text-lg font-bold text-zinc-400 sm:text-xl">
             Get Noticed. Get Hired. Get Ahead.
           </p>
+        </div> */}
+        <div className="z-10 max-w-prose space-y-4">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="scroll-m-20 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"
+          >
+            Create the{" "}
+            <span className="inline-block bg-gradient-to-r from-red-200 to-blue-300 bg-clip-text text-transparent">
+              Perfect Resume
+            </span>{" "}
+            in Minutes
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="sm:text-md text-sm text-zinc-400"
+          >
+            Our <span className="font-bold">AI resume builder</span> helps you
+            design a professional resume
+          </motion.p>
         </div>
 
         {/* Get Started Button */}
@@ -428,7 +478,7 @@ export default function Home() {
           asChild
           size="lg"
           variant="outline"
-          className="text-black  border-black border-2 border-dotted  bg-white z-10 "
+          className="z-10 border-black bg-white font-bold text-black"
         >
           <Link href="/resumes">Get started</Link>
         </Button>
@@ -446,15 +496,32 @@ export default function Home() {
         </div>
 
         {/* Features Section */}
-        <div ref={featuresRef} className="mt-24 flex w-full flex-col items-center space-y-4 text-zinc-100 sm:space-y-6 pt-24">
-          <div className="text-2xl font-bold tracking-tighter sm:text-4xl lg:text-5xl">
-            Features
+        <div
+          ref={featuresRef}
+          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
+        >
+          <div className="h-18 w-1/4 rounded-b-full bg-white">
+            <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+              Features
+            </div>
           </div>
           <p className="z-10 mt-4 text-sm text-zinc-400">
-            Discover how <span className="font-bold mr-1">ResumeSMITH</span>transforms your resume creation
+            Discover how <span className="mr-1 font-bold">ResumeSMITH</span>
+            transforms your resume creation
           </p>
-          
+
           {/* Features Grid */}
+          <motion.div
+            ref={ref} // Attach the ref
+            initial={{ opacity: 0, y: 50 }} // Starting animation
+            animate={isInView ? { opacity: 1, y: 0 } : {}} // Animate when in view
+            transition={{ duration: 1.5 }}
+          >
+            <Image src={editor} alt={""} width={"800"} unoptimized />
+            <p className="mb-4 mt-4 text-center text-sm font-bold text-zinc-200">
+              Real-time editor for crafting your perfect resume.
+            </p>
+          </motion.div>
           <div className="mt-12 grid w-full grid-cols-1 gap-6 px-8 md:grid-cols-3 lg:gap-8 lg:px-32">
             {features.map((feature, index) => (
               <FeatureCard key={index} {...feature} />
@@ -463,24 +530,53 @@ export default function Home() {
         </div>
 
         {/* Process Section */}
-        <div ref={processRef} className="mt-24 flex w-full flex-col items-center space-y-4 text-zinc-100 sm:space-y-6 pt-24">
-          <div className="text-2xl font-bold tracking-tighter sm:text-4xl lg:text-5xl">
-            Process
+        <div
+          ref={processRef}
+          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
+        >
+          <div className="h-18 w-1/4 rounded-b-full bg-white">
+            <div className="text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+              Process
+            </div>
           </div>
           <p className="z-10 mt-4 text-sm text-zinc-400">
-            Learn how <span className="font-bold text-zinc-300">easy</span> it is to build your resume with <span className="font-bold">ResumeSMITH</span>
+            Learn how <span className="font-bold text-zinc-300">easy</span> it
+            is to build your resume with{" "}
+            <span className="font-bold">ResumeSMITH</span>
           </p>
 
           {/* Process Steps */}
           <div className="mt-12 grid w-full grid-cols-1 gap-6 px-8 md:grid-cols-3 lg:gap-8 lg:px-32">
             {processSteps.map((step, index) => (
-              <ProcessCard key={index} {...step} />
+              <>
+                <motion.div
+                  ref={procesRef}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isProcessView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 1.5 }}
+                >
+                  <ProcessCard key={index} {...step} />
+                </motion.div>
+              </>
             ))}
           </div>
         </div>
-
+        {/* How It works */}
+        <div
+          ref={howItWorkRef}
+          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
+        >
+          <div className="h-18 w-1/4 rounded-b-full bg-white">
+            <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+              How It Works
+            </div>
+          </div>
+        </div>
         {/* Contact Section */}
-        <div ref={contactRef} className="mt-24 flex w-full flex-col items-center space-y-4 text-zinc-100 sm:space-y-6 pt-24">
+        <div
+          ref={contactRef}
+          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
+        >
           <div className="text-2xl font-bold tracking-tighter sm:text-4xl lg:text-5xl">
             Contact Us
           </div>
@@ -499,10 +595,10 @@ export default function Home() {
 
 // Feature Card Component
 const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="group relative flex flex-col items-center rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6 text-center transition-all hover:border-white/20 hover:bg-white/5">
+  <div className="group relative flex flex-col items-center rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6 text-center transition-all hover:scale-105 hover:border-white/20 hover:bg-white/5 hover:shadow-md hover:shadow-zinc-700">
     <div className="absolute -inset-px rounded-xl bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
     <div className="relative z-10">
-      {Icon && <Icon className="mb-3 h-8 w-8  mx-auto text-white/70" />}
+      {Icon && <Icon className="mx-auto mb-3 h-8 w-8 text-white/70" />}
       <h3 className="mb-2 font-semibold tracking-tight text-white">{title}</h3>
       <p className="text-sm leading-relaxed text-white/50">{description}</p>
     </div>
@@ -511,10 +607,10 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 
 // Process Card Component
 const ProcessCard = ({ icon: Icon, title, description }) => (
-  <div className="group relative flex flex-col items-center rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6 text-center transition-all hover:border-white/20 hover:bg-white/5">
+  <div className="group relative flex flex-col items-center rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6 text-center transition-all hover:scale-105 hover:border-white/20 hover:bg-white/5 hover:shadow-md hover:shadow-zinc-700">
     <div className="absolute -inset-px rounded-xl bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
     <div className="relative z-10">
-      {Icon && <Icon className="mb-3 h-8 w-8 mx-auto text-white/70" />}
+      {Icon && <Icon className="mx-auto mb-3 h-8 w-8 text-white/70" />}
       <h3 className="mb-2 font-semibold tracking-tight text-white">{title}</h3>
       <p className="text-sm leading-relaxed text-white/50">{description}</p>
     </div>
@@ -522,57 +618,116 @@ const ProcessCard = ({ icon: Icon, title, description }) => (
 );
 
 // Data
+// const features = [
+//   {
+//     icon: Wand,
+//     title: "AI-Powered Generation using GPT-40",
+//     description: "Intelligent AI transforms basic inputs into professional, compelling resume content."
+//   },
+//   {
+//     icon: Layout,
+//     title: "Live Resume Preview",
+//     description: "Instantly see your resume transform as you build it, across all devices."
+//   },
+//   {
+//     icon: BlocksIcon,
+//     title: "Comprehensive Builder",
+//     description: "Create detailed resumes with multi-step forms covering all professional details."
+//   },
+//   {
+//     icon: Shield,
+//     title: "Secure Authentication",
+//     description: "Protect your professional information with robust, multi-method authentication."
+//   },
+//   {
+//     icon: Zap,
+//     title: "Auto-Save Protection",
+//     description: "Never lose your progress with automatic saving and intelligent warning systems."
+//   },
+//   {
+//     icon: Compass,
+//     title: "Multiple Resume Management",
+//     description: "Create, edit, and manage multiple resume versions with ease."
+//   },
+//   {icon: Gavel,
+//     title: "Jake Resume template" ,
+//     description: " Most popular and accepted resume template in software industry."
+// }
+// ];
+
 const features = [
   {
-    icon: Wand,
-    title: "AI-Powered Generation using GPT-40",
-    description: "Intelligent AI transforms basic inputs into professional, compelling resume content."
+    title: "AI-Powered Resume Builder",
+    description:
+      "A web application that helps users create professional resumes using AI-assisted features and modern web technologies.",
+    icon: Brain,
   },
   {
-    icon: Layout,
-    title: "Live Resume Preview",
-    description: "Instantly see your resume transform as you build it, across all devices."
+    title: "Drag and Drop Resume Sections",
+    description:
+      "Utilizes @dnd-kit libraries to allow users to easily reorder and customize resume sections through an intuitive drag-and-drop interface.",
+    icon: Move,
   },
   {
-    icon: BlocksIcon,
-    title: "Comprehensive Builder",
-    description: "Create detailed resumes with multi-step forms covering all professional details."
+    title: "AI-Powered Form Suggestions",
+    description:
+      "Leverages OpenAI to provide intelligent suggestions for job titles, countries, and resume summaries, helping users craft more compelling content.",
+    icon: Brain,
   },
   {
-    icon: Shield,
-    title: "Secure Authentication",
-    description: "Protect your professional information with robust, multi-method authentication."
+    title: "PDF Resume Generation",
+    description:
+      "Integrates @react-pdf/renderer to allow users to generate professional PDF resumes directly from the web application.",
+    icon: NotepadTextDashed,
   },
   {
-    icon: Zap,
-    title: "Auto-Save Protection",
-    description: "Never lose your progress with automatic saving and intelligent warning systems."
+    title: "Authentication and User Management",
+    description:
+      "Uses Clerk (@clerk/nextjs) for secure user authentication, allowing users to create, save, and manage their resume profiles.",
+    icon: Lock,
   },
   {
-    icon: Compass,
-    title: "Multiple Resume Management",
-    description: "Create, edit, and manage multiple resume versions with ease."
+    title: "Dynamic Form Creation",
+    description:
+      "Implements comprehensive forms for projects, achievements, education, and other resume sections with validation using react-hook-form and zod.",
+    icon: List,
   },
-  {icon: Gavel,
-    title: "Jake Resume template" ,
-    description: " Most popular and accepted resume template in software industry."
-}
+  {
+    title: "Theme and Styling",
+    description:
+      "Utilizes Tailwind CSS, next-themes, and radix-ui components to provide a modern, responsive, and customizable user interface with dark/light mode support.",
+    icon: Palette,
+  },
+  {
+    title: "Resume Printing and Export",
+    description:
+      "Incorporates react-to-print functionality, enabling users to directly print or export their resume from the web application.",
+    icon: Printer,
+  },
+  {
+    title: "Cloud Storage and Blob Management",
+    description:
+      "Integrates @vercel/blob for efficient file and image storage, allowing users to upload and manage profile pictures and other resume-related assets.",
+    icon: Cloud,
+  },
 ];
 
 const processSteps = [
   {
     icon: UserRoundPen,
     title: "Sign Up",
-    description: "Create a free account to get started with ResumeSMITH."
+    description: "Create a free account using Github or Google or username to get started with ResumeSMITH.",
   },
   {
     icon: Pencil,
     title: "Craft",
-    description: "Enter your details, and let the AI craft a tailored, professional resume for you in seconds!"
+    description:
+      "Enter your details, and let the AI craft a tailored, professional resume for you in seconds!",
   },
   {
     icon: Save,
     title: "Save",
-    description: "Save, download, and share your professional A4-format resume with job applications!"
-  }
+    description:
+      "Save, download, and share your professional A4-format resume with job applications!",
+  },
 ];
