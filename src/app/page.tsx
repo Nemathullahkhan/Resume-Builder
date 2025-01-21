@@ -462,14 +462,20 @@ export default function Home() {
         </div>
 
         {/* Get Started Button */}
+        <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="z-10">
         <Button
           asChild
           size="lg"
           variant="outline"
-          className="z-10 border-black bg-white font-bold text-black"
-        >
+          className="z-10 border-black bg-white text-lg tracking-tighter text-black"
+          >
           <Link href="/resumes">Get started</Link>
         </Button>
+          </motion.div>
 
         {/* Preview Image */}
         <div className="relative z-10 mt-6">
@@ -477,8 +483,8 @@ export default function Home() {
           <Image
             src={image}
             alt="Resume preview"
-            width={400}
-            height={320}
+            width={600}
+            height={420}
             className="relative rounded-lg shadow-[0_0_30px_10px_rgba(192,192,192,0.5)]"
           />
         </div>
@@ -500,7 +506,7 @@ export default function Home() {
             className="h-18 w-1/4 rounded-b-full bg-white"
           >
             <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
-               Features
+              Features
             </div>
           </motion.div>
           <p className="z-10 mt-4 text-sm text-zinc-400">
@@ -530,7 +536,7 @@ export default function Home() {
         {/* Process Section */}
         <div
           ref={processRef}
-          className="mt-32 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6 mb-12"
+          className="mb-12 mt-32 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
         >
           <motion.div
             initial={{ y: -20, opacity: 0 }}
@@ -539,7 +545,7 @@ export default function Home() {
             className="h-18 w-1/4 rounded-b-full bg-white"
           >
             <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
-               Process
+              Process
             </div>
           </motion.div>
           {/* <div className="h-18 w-1/4 rounded-b-full bg-white">
@@ -578,10 +584,10 @@ export default function Home() {
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5,delay:0.2 }}
-            className="h-18 w-1/4 rounded-b-full bg-white"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="h-18 w-1/4 rounded-b-full bg-white max-md:w-[240px]"
           >
-            <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+            <div className="max-md:text-md flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
               How It Works
             </div>
           </motion.div>
@@ -646,6 +652,34 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+
+        <div className="mt-36 flex h-[250px] w-3/4 items-center justify-center rounded-t-full bg-gradient-to-b from-zinc-500/30 to-zinc-900/60 text-center flex-col">
+  <div className="space-y-4 mb-4">
+    <h1 className="scroll-m-20 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">
+      Still not satisfied? Why not give it a try and see the
+      <span className="block bg-gradient-to-r from-red-200 to-blue-300 bg-clip-text text-transparent lg:inline-block">
+        difference for yourself?
+      </span>
+    </h1>
+  </div>
+  <div className="relative">
+    {/* Subtle Blur Light */}
+    <div className="absolute inset-0 -z-10 h-24 w-64 rounded-full bg-white blur-3xl opacity-20"></div>
+    {/* Button */}
+    <Button
+      asChild
+      size="lg"
+      variant="outline"
+      className="bg-transparent border-zinc-500 border-2 rounded-full font-light tracking-tighter w-64 flex justify-center shadow-md shadow-zinc-500 transition-transform duration-300 ease-out hover:scale-125 hover:font-bold hover:shadow-lg "
+    >
+      <Link href="/resumes">Get started</Link>
+    </Button>
+  </div>
+</div>
+
+
+
+
         {/* Contact Section */}
         <div
           ref={contactRef}
@@ -655,11 +689,11 @@ export default function Home() {
             Contact Us
           </div>
           <p className="z-10 mt-4 text-sm text-zinc-400">
-            Get in touch with our team
+            Got questions? Reach out and let's create impactful resumes
+            together.
           </p>
           <div className="mt-8 text-zinc-400">
-            <p>Email: contact@resumesmith.com</p>
-            <p>Follow us on Twitter @resumesmith</p>
+            <p>Email: resumesmithweb@gmail.com </p>
           </div>
         </div>
       </main>
