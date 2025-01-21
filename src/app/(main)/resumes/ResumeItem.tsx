@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import ResumePreview from "@/components/ResumePreview";
@@ -34,13 +32,13 @@ interface ResumeItemProps {
 }
 
 export default function ResumeItem({ resume }: ResumeItemProps) {
-  const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const reactToPrintFn = useReactToPrint({
     contentRef,
-    documentTitle: resume.title || "Resume"
-  })
+    documentTitle: resume.title || "Resume",
+  });
 
   const wasUpdated = resume.updatedAt !== resume.createdAt;
 
@@ -74,9 +72,9 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
         </Link>
       </div>
-      <MoreMenu 
-        resumeId={resume.id} 
-        onPrintClick={reactToPrintFn} 
+      <MoreMenu
+        resumeId={resume.id}
+        onPrintClick={reactToPrintFn}
         onDeleteClick={() => setShowDeleteDialog(true)}
       />
       <DeleteResumeDialog
@@ -121,7 +119,7 @@ function MoreMenu({ resumeId, onPrintClick, onDeleteClick }: MoreMenuProps) {
           className="flex items-center gap-2"
           onClick={onPrintClick}
         >
-          <Printer className="size-4"/>
+          <Printer className="size-4" />
           Print
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -168,19 +166,16 @@ function DeleteResumeDialog({
         <DialogHeader>
           <DialogTitle>Delete Resume</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this resume? 
-            This action cannot be undone.
+            Are you sure you want to delete this resume? This action cannot be
+            undone.
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-end space-x-2">
-          <Button 
-            variant="secondary" 
-            onClick={() => onOpenChange(false)}
-          >
+          <Button variant="secondary" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <LoadingButton 
-            variant="destructive" 
+          <LoadingButton
+            variant="destructive"
             onClick={handleDelete}
             loading={isDeleting}
           >

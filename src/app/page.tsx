@@ -306,7 +306,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import {
-  FileText,
   Move,
   Brain,
   NotepadTextDashed,
@@ -317,13 +316,8 @@ import {
   Cloud,
 } from "lucide-react";
 import {
-  Blocks,
-  BlocksIcon,
-  Compass,
-  Layout,
   Pencil,
   Save,
-  Shield,
   UserRoundPen,
   Wand,
   Zap,
