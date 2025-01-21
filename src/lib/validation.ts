@@ -122,6 +122,7 @@ export const courseSchema = z.object({
   courses:z.array(
     z.object({
       course : optionalString,
+      learningPlatform : optionalString,
       courseLink : optionalString,
       description: optionalString,
     })

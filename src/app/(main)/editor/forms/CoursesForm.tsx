@@ -180,6 +180,19 @@ function CourseItem({ id, form, index, remove }: ProjectItemProps) {
 
       <FormField
         control={form.control}
+        name={`courses.${index}.learningPlatform`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Learning Platform/ Organization</FormLabel>
+            <FormControl>
+              <Input {...field} autoFocus />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
         name={`courses.${index}.courseLink`}
         render={({ field }) => (
           <FormItem>

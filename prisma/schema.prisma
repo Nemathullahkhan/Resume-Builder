@@ -124,6 +124,7 @@ model SkillSet {
 model Courses{
   id String @id @default(cuid())
   course String?
+  learningPlatform String? 
   courseLink String?
   description String?
   resumeId String

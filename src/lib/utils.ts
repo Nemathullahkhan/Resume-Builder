@@ -62,6 +62,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     })),
     courses: data.courses.map((val)=>({
       course:val.course || undefined,
+      learningPlatform: val.learningPlatform || undefined,
       courseLink:val.courseLink || undefined,
       description:val.description || undefined,
     })),

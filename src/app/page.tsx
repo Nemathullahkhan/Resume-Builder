@@ -336,7 +336,8 @@ import { motion, useInView } from "framer-motion";
 import image from "@/assets/jakes-resume-1.png";
 import editor from "@/assets/editor.png";
 import blankPage from "@/assets/blankpage-1.png"
-
+import landinpage1 from "@/assets/landing page -1-1.png"
+import landingPage2 from "@/assets/landing page2-1.png"
 // Navbar Component
 const HomeNavbar = ({ scrollToSection }) => {
   return (
@@ -545,7 +546,7 @@ export default function Home() {
           </div>
         </div>
         {/* How It works */}
-        <div
+        {/* <div
           ref={howItWorkRef}
           className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
         >
@@ -554,18 +555,112 @@ export default function Home() {
               How It Works
             </div>
           </div>
-          <div className="flex w-full bg-blue-300">
+          <div className="flex justify-center w-full gap-24  ">
+            <div className="mt-10">
             <Image 
             src = {blankPage} 
             alt = {"blankPage"}
-            width={"300"} 
+            width={"320"} 
             />
+            </div>
+            <div className="mt-10">
+            <Image 
+            src = {landinpage1} 
+            alt = {"landingpage1"}
+            width={"320"} 
+            unoptimized
+            />
+            </div>
+            <div className="mt-10">
+            <Image 
+            src = {blankPage} 
+            alt = {"blankPage"}
+            width={"320"} 
+            />
+            </div>
+            
 
             
 
 
           </div>
+        </div> */}
+
+<div ref={howItWorkRef} className="mt-24 flex w-full flex-col items-center space-y-8 pt-24 text-zinc-100 sm:space-y-10">
+      {/* Heading Section */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="h-18 w-1/4 rounded-b-full bg-white"
+      >
+        <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+          How It Works
         </div>
+      </motion.div>
+
+      {/* Resume Image Section */}
+      <div className="relative flex flex-wrap justify-center gap-20 lg:gap-28 max-w-7xl mx-auto px-4">
+        {/* First Image */}
+        <motion.div 
+          initial={{ x: -50, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative h-[360px] w-[280px]">
+            <Image
+              src={blankPage}
+              alt="Blank Page"
+              className="h-full w-full object-contain rounded-lg z-20"
+            />
+          </div>
+          <span className="mt-4 text-sm text-zinc-400 text-center">
+            Step 1: Start with a Blank Page
+          </span>
+        </motion.div>
+
+        {/* Second Image */}
+        <motion.div 
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative h-[360px] w-[280px]">
+            <Image
+              src={landinpage1}
+              alt="Landing Page"
+              className="h-full w-full object-contain rounded-lg z-20 "
+            />
+          </div>
+          <span className="mt-4 text-sm text-zinc-400 text-center">
+            Step 2: Build Your Resume
+          </span>
+        </motion.div>
+
+        {/* Third Image */}
+        <motion.div 
+          initial={{ x: 50, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative h-[360px] w-[280px]">
+            <Image
+              src={landingPage2}
+              alt="Final Resume"
+              className="h-full w-full object-contain rounded-lg z-20"
+            />
+          </div>
+          <span className="mt-4 text-sm text-zinc-400 text-center">
+            Step 3: Customize with Colors
+          </span>
+        </motion.div>
+
+        
+      </div>
+    </div>
         {/* Contact Section */}
         <div
           ref={contactRef}

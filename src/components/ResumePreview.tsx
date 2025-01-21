@@ -548,6 +548,10 @@ function CoursesSection({ resumeData }: ResumeSectionProps) {
             <span className="text-black-500 flex items-center justify-center px-1 text-[16px]">
               {course.course}
             </span>
+            {course.course && course.learningPlatform ?" | ":""}
+            {course.learningPlatform && (
+              <span className="items-center px-1 text-sm   tracking-wide underline-offset-auto">{course.learningPlatform}</span>
+            )}
             {course.course && course.courseLink ? "  | " : ""}
             {course.courseLink && (
               <a
