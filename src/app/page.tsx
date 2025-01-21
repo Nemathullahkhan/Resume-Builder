@@ -335,9 +335,9 @@ import { redirect } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import image from "@/assets/jakes-resume-1.png";
 import editor from "@/assets/editor.png";
-import blankPage from "@/assets/blankpage-1.png"
-import landinpage1 from "@/assets/landing page -1-1.png"
-import landingPage2 from "@/assets/landing page2-1.png"
+import blankPage from "@/assets/blankpage-1.png";
+import landinpage1 from "@/assets/landing page -1-1.png";
+import landingPage2 from "@/assets/landing page2-1.png";
 // Navbar Component
 const HomeNavbar = ({ scrollToSection }) => {
   return (
@@ -345,15 +345,15 @@ const HomeNavbar = ({ scrollToSection }) => {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 p-4 backdrop-blur-md">
         <Link href="/" className="flex items-center gap-2">
           <Gavel />
-          <span className="text-[20px] max-md:text-sm font-extrabold tracking-tight text-zinc-200">
+          <span className="text-[20px] font-extrabold tracking-tight text-zinc-200 max-md:text-sm">
             ResumeSMITH
           </span>
         </Link>
-        <div className="flex items-center gap-4 max-md:gap-2 ">
+        <div className="flex items-center gap-4 max-md:gap-2">
           <Button
             variant="ghost"
             onClick={() => scrollToSection("features")}
-            className="text-sm text-zinc-300 hover:text-zinc-100 max-md:text-xs "
+            className="text-sm text-zinc-300 hover:text-zinc-100 max-md:text-xs"
           >
             Features
           </Button>
@@ -379,7 +379,11 @@ const HomeNavbar = ({ scrollToSection }) => {
             Contact
           </Button>
         </div>
-        <Button asChild variant="ghost" className="text-md font-extrabold max-md:text-xs ">
+        <Button
+          asChild
+          variant="ghost"
+          className="text-md font-extrabold max-md:text-xs"
+        >
           <Link href="/resumes">LOGIN</Link>
         </Button>
       </div>
@@ -441,7 +445,7 @@ export default function Home() {
             className="scroll-m-20 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"
           >
             Create the{" "}
-            <span className="block lg:inline-block bg-gradient-to-r from-red-200 to-blue-300 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-red-200 to-blue-300 bg-clip-text text-transparent lg:inline-block">
               Perfect Resume
             </span>{" "}
             in Minutes
@@ -482,13 +486,23 @@ export default function Home() {
         {/* Features Section */}
         <div
           ref={featuresRef}
-          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6 sm:z-20"
+          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:z-20 sm:space-y-6"
         >
-          <div className="h-18 w-1/4 rounded-b-full bg-white">
+          {/* <div className="h-18 w-1/4 rounded-b-full bg-white">
             <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
               Features
             </div>
-          </div>
+          </div> */}
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="h-18 w-1/4 rounded-b-full bg-white"
+          >
+            <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+               Features
+            </div>
+          </motion.div>
           <p className="z-10 mt-4 text-sm text-zinc-400">
             Discover how <span className="mr-1 font-bold">ResumeSMITH</span>
             transforms your resume creation
@@ -516,13 +530,23 @@ export default function Home() {
         {/* Process Section */}
         <div
           ref={processRef}
-          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
+          className="mt-32 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6 mb-12"
         >
-          <div className="h-18 w-1/4 rounded-b-full bg-white">
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="h-18 w-1/4 rounded-b-full bg-white"
+          >
+            <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
+               Process
+            </div>
+          </motion.div>
+          {/* <div className="h-18 w-1/4 rounded-b-full bg-white">
             <div className="text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
               Process
             </div>
-          </div>
+          </div> */}
           <p className="z-10 mt-4 text-sm text-zinc-400">
             Learn how <span className="font-bold text-zinc-300">easy</span> it
             is to build your resume with{" "}
@@ -545,122 +569,83 @@ export default function Home() {
             ))}
           </div>
         </div>
-        {/* How It works */}
-        {/* <div
+
+        <div
           ref={howItWorkRef}
-          className="mt-24 flex w-full flex-col items-center space-y-4 pt-24 text-zinc-100 sm:space-y-6"
+          className="mt-24 flex w-full flex-col items-center space-y-8 pt-24 text-zinc-100 sm:space-y-10"
         >
-          <div className="h-18 w-1/4 rounded-b-full bg-white">
+          {/* Heading Section */}
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5,delay:0.2 }}
+            className="h-18 w-1/4 rounded-b-full bg-white"
+          >
             <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
               How It Works
             </div>
+          </motion.div>
+
+          {/* Resume Image Section */}
+          <div className="relative mx-auto flex max-w-7xl flex-wrap justify-center gap-20 px-4 lg:gap-28">
+            {/* First Image */}
+            <motion.div
+              initial={{ x: -50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex flex-col items-center"
+            >
+              <div className="relative h-[360px] w-[280px]">
+                <Image
+                  src={blankPage}
+                  alt="Blank Page"
+                  className="z-20 h-full w-full rounded-lg object-contain"
+                />
+              </div>
+              <span className="mt-4 text-center text-sm text-zinc-400">
+                Step 1: Start with a Blank Page
+              </span>
+            </motion.div>
+
+            {/* Second Image */}
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex flex-col items-center"
+            >
+              <div className="relative h-[360px] w-[280px]">
+                <Image
+                  src={landinpage1}
+                  alt="Landing Page"
+                  className="z-20 h-full w-full rounded-lg object-contain"
+                />
+              </div>
+              <span className="mt-4 text-center text-sm text-zinc-400">
+                Step 2: Build Your Resume
+              </span>
+            </motion.div>
+
+            {/* Third Image */}
+            <motion.div
+              initial={{ x: 50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="flex flex-col items-center"
+            >
+              <div className="relative h-[360px] w-[280px]">
+                <Image
+                  src={landingPage2}
+                  alt="Final Resume"
+                  className="z-20 h-full w-full rounded-lg object-contain"
+                />
+              </div>
+              <span className="mt-4 text-center text-sm text-zinc-400">
+                Step 3: Customize with Colors
+              </span>
+            </motion.div>
           </div>
-          <div className="flex justify-center w-full gap-24  ">
-            <div className="mt-10">
-            <Image 
-            src = {blankPage} 
-            alt = {"blankPage"}
-            width={"320"} 
-            />
-            </div>
-            <div className="mt-10">
-            <Image 
-            src = {landinpage1} 
-            alt = {"landingpage1"}
-            width={"320"} 
-            unoptimized
-            />
-            </div>
-            <div className="mt-10">
-            <Image 
-            src = {blankPage} 
-            alt = {"blankPage"}
-            width={"320"} 
-            />
-            </div>
-            
-
-            
-
-
-          </div>
-        </div> */}
-
-<div ref={howItWorkRef} className="mt-24 flex w-full flex-col items-center space-y-8 pt-24 text-zinc-100 sm:space-y-10">
-      {/* Heading Section */}
-      <motion.div 
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="h-18 w-1/4 rounded-b-full bg-white"
-      >
-        <div className="flex justify-center text-xl font-bold tracking-tighter text-black sm:text-3xl lg:text-4xl">
-          How It Works
         </div>
-      </motion.div>
-
-      {/* Resume Image Section */}
-      <div className="relative flex flex-wrap justify-center gap-20 lg:gap-28 max-w-7xl mx-auto px-4">
-        {/* First Image */}
-        <motion.div 
-          initial={{ x: -50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col items-center"
-        >
-          <div className="relative h-[360px] w-[280px]">
-            <Image
-              src={blankPage}
-              alt="Blank Page"
-              className="h-full w-full object-contain rounded-lg z-20"
-            />
-          </div>
-          <span className="mt-4 text-sm text-zinc-400 text-center">
-            Step 1: Start with a Blank Page
-          </span>
-        </motion.div>
-
-        {/* Second Image */}
-        <motion.div 
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex flex-col items-center"
-        >
-          <div className="relative h-[360px] w-[280px]">
-            <Image
-              src={landinpage1}
-              alt="Landing Page"
-              className="h-full w-full object-contain rounded-lg z-20 "
-            />
-          </div>
-          <span className="mt-4 text-sm text-zinc-400 text-center">
-            Step 2: Build Your Resume
-          </span>
-        </motion.div>
-
-        {/* Third Image */}
-        <motion.div 
-          initial={{ x: 50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="flex flex-col items-center"
-        >
-          <div className="relative h-[360px] w-[280px]">
-            <Image
-              src={landingPage2}
-              alt="Final Resume"
-              className="h-full w-full object-contain rounded-lg z-20"
-            />
-          </div>
-          <span className="mt-4 text-sm text-zinc-400 text-center">
-            Step 3: Customize with Colors
-          </span>
-        </motion.div>
-
-        
-      </div>
-    </div>
         {/* Contact Section */}
         <div
           ref={contactRef}
@@ -705,7 +690,6 @@ const ProcessCard = ({ icon: Icon, title, description }) => (
     </div>
   </div>
 );
-
 
 const features = [
   {
@@ -768,7 +752,8 @@ const processSteps = [
   {
     icon: UserRoundPen,
     title: "Sign Up",
-    description: "Create a free account using Github or Google or username to get started with ResumeSMITH.",
+    description:
+      "Create a free account using Github or Google or username to get started with ResumeSMITH.",
   },
   {
     icon: Pencil,
